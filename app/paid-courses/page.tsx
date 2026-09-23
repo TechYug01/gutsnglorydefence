@@ -13,18 +13,10 @@ type PageProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
+import { getCoursesData } from "@/lib/courses";
+
 async function getPaidCourses(sort: string): Promise<Course[]> {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/courses?type=paid&sort=${sort}`, {
-      cache: "no-store",
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return data.courses ?? [];
-  } catch {
-    return [];
-  }
+  return getCoursesData("paid", sort, 100) as unknown as Course[];
 }
 
 export default async function PaidCoursesPage({ searchParams }: PageProps) {

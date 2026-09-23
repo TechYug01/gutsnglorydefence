@@ -12,18 +12,10 @@ import Image from "next/image";
 
 import CourseCard, { Course } from "./components/CourseCard";
 
+import { getCoursesData } from "@/lib/courses";
+
 async function getFeaturedCourses(): Promise<Course[]> {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/courses?limit=5&sort=popular`, {
-      cache: "no-store",
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return data.courses ?? [];
-  } catch {
-    return [];
-  }
+  return getCoursesData("all", "popular", 5) as unknown as Course[];
 }
 
 export default async function Home() {
