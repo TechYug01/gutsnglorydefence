@@ -1,5 +1,5 @@
-import { UploadCloud, X } from "lucide-react";
 "use client";
+import { UploadCloud, X } from "lucide-react";
 
 import { useState, useRef } from "react";
 import Image from "next/image";
