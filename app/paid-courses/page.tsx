@@ -7,6 +7,7 @@ import Image from "next/image";
 
 import CourseCard, { Course } from "../components/CourseCard";
 import Link from "next/link";
+import { FadeIn, StaggerChildren } from "../components/FadeIn";
 import { BookOpen } from "lucide-react";
 
 type PageProps = {
@@ -29,7 +30,7 @@ export default async function PaidCoursesPage({ searchParams }: PageProps) {
       {/* Page header */}
       <div className="pt-28 pb-12 px-6 text-center bg-surface border-b border-edge">
         <span className="inline-block text-xs font-bold text-gold tracking-[2.5px] uppercase mb-3">Premium Programs</span>
-        <h1 className="font-heading font-black text-foreground leading-tight mb-4 text-[clamp(2rem,4vw,3rem)]">
+        <h1 className="font-heading font-black text-foreground leading-tight mb-4 text-3xl md:text-5xl uppercase tracking-tighter">
           Paid <span className="text-gold">Courses</span>
         </h1>
         <p className="text-[1rem] text-muted max-w-[480px] mx-auto">

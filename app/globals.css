@@ -24,10 +24,10 @@
 
   --accent-primary: #2D5016;
   --accent-primary-hover: #3A6A1D;
-  --accent-secondary: #C8A951;
-  --accent-secondary-hover: #D4B85E;
-  --accent-gold: #C8A951;
-  --accent-gold-glow: rgba(200, 169, 81, 0.3);
+  --accent-secondary: #FACC15;
+  --accent-secondary-hover: #FDE047;
+  --accent-gold: #FACC15;
+  --accent-gold-glow: rgba(250, 204, 21, 0.3);
 
   --border-primary: rgba(45, 80, 22, 0.15);
   --border-secondary: rgba(0, 0, 0, 0.08);
@@ -305,7 +305,7 @@ body {
   display: flex !important;
 }
 .desktop-search {
-  display: flex !important;
+  display: none !important;
 }
 .mobile-hamburger {
   display: none !important;
@@ -317,6 +317,12 @@ body {
 /* Spillover section hidden on wide screens (items already visible as top-level) */
 .nav-overflow-spillover {
   display: none !important;
+}
+
+@media (min-width: 768px) {
+  .desktop-search {
+    display: flex !important;
+  }
 }
 
 /* Medium screens — shift Blog + Current Affairs into More dropdown */

@@ -16,7 +16,7 @@ export default async function TestSeriesPage() {
         <span className="inline-block text-xs font-bold text-gold tracking-[2.5px] uppercase mb-3">
           Mock Tests
         </span>
-        <h1 className="font-heading font-black text-foreground leading-tight mb-4 text-[clamp(2rem,4vw,3rem)]">
+        <h1 className="font-heading font-black text-foreground leading-tight mb-4 text-3xl md:text-5xl uppercase tracking-tighter">
           Test <span className="text-gold">Series</span>
         </h1>
         <p className="text-[1rem] text-muted max-w-[480px] mx-auto">

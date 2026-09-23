@@ -111,20 +111,20 @@ export default function Navbar() {
   // In light mode, non-home pages have a light background initially, so we need dark text.
   // When scrolled, we always use the theme's text color.
   const needDarkText = theme === "light" && !isHome;
-  const navText = (scrolled || needDarkText) ? "text-secondary" : "text-white/80";
-  const navHoverBg = (scrolled || needDarkText) ? "hover:bg-edge" : "hover:bg-white/10";
+  const navText = (scrolled || mobileOpen || needDarkText) ? "text-secondary" : "text-white/80";
+  const navHoverBg = (scrolled || mobileOpen || needDarkText) ? "hover:bg-card-hover" : "hover:bg-white/10";
   const showDropdown = searchFocused && (searchResults.length > 0 || searchLoading);
 
   const dropdownBtnClass = (open: boolean) =>
     `px-3 py-2 rounded-xl text-sm font-medium border-none cursor-pointer flex items-center gap-1 transition-all duration-200 font-[inherit] whitespace-nowrap hover:text-gold ${
-      open ? "text-gold bg-edge" : `${navText} bg-transparent ${navHoverBg}`
+      open ? `text-gold ${navHoverBg.replace("hover:", "")}` : `${navText} bg-transparent ${navHoverBg}`
     }`;
 
   return (
     <>
       <nav
         className={`fixed top-0 inset-x-0 z-[1000] transition-all duration-300 ${
-          scrolled
+          (scrolled || mobileOpen)
             ? "bg-[var(--bg-navbar)] backdrop-blur-xl border-b border-edge py-2"
             : "border-b border-transparent py-3"
         }`}
@@ -147,7 +147,7 @@ export default function Navbar() {
               </span>
               <span
                 className={`font-subheading text-[0.55rem] font-semibold uppercase flex justify-between w-full mt-[1px] px-[1.5px] ${
-                  (scrolled || needDarkText) ? "text-muted" : "text-white/50"
+                  (scrolled || mobileOpen || needDarkText) ? "text-muted" : "text-white/50"
                 }`}
               >
                 {"DEFENCE".split("").map((l, i) => <span key={i}>{l}</span>)}
@@ -190,13 +190,13 @@ export default function Navbar() {
                 <ChevronIcon open={caOpen} />
               </button>
               {caOpen && (
-                <div className="animate-fade-in-down absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-card border border-edge rounded-2xl p-2 min-w-[220px] shadow-lg z-50">
+                <div className="animate-fade-in-down absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[var(--bg-navbar)] backdrop-blur-xl border border-edge rounded-2xl p-2 min-w-[220px] shadow-lg z-50">
                   {caLinks.map((link) => (
                     <Link
                       key={link.label}
                       href={link.href}
                       onClick={() => setCaOpen(false)}
-                      className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-secondary no-underline transition-all duration-200 hover:text-gold hover:bg-edge"
+                      className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-secondary no-underline transition-all duration-200 hover:text-gold ${navHoverBg}`}
                     >
                       <link.icon />
                       {link.label}
@@ -216,7 +216,7 @@ export default function Navbar() {
                 <ChevronIcon open={moreOpen} />
               </button>
               {moreOpen && (
-                <div className="animate-fade-in-down absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-card border border-edge rounded-2xl p-2 min-w-[220px] shadow-lg z-50">
+                <div className="animate-fade-in-down absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[var(--bg-navbar)] backdrop-blur-xl border border-edge rounded-2xl p-2 min-w-[220px] shadow-lg z-50">
                   {/* Show overflow items here on medium screens */}
                   <div className="nav-overflow-spillover">
                     {overflowLinks.map((link: any) => (
@@ -225,7 +225,7 @@ export default function Navbar() {
                         href={link.href}
                         target={link.external ? "_blank" : undefined}
                         onClick={() => setMoreOpen(false)}
-                        className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-secondary no-underline transition-all duration-200 hover:text-gold hover:bg-edge"
+                        className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-secondary no-underline transition-all duration-200 hover:text-gold ${navHoverBg}`}
                       >
                         <BookIcon />
                         {link.label}
@@ -238,7 +238,7 @@ export default function Navbar() {
                         key={link.label}
                         href={link.href}
                         onClick={() => setMoreOpen(false)}
-                        className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-secondary no-underline transition-all duration-200 hover:text-gold hover:bg-edge"
+                        className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-secondary no-underline transition-all duration-200 hover:text-gold ${navHoverBg}`}
                       >
                         <link.icon />
                         {link.label}
@@ -251,7 +251,7 @@ export default function Navbar() {
                       key={link.label}
                       href={link.href}
                       onClick={() => setMoreOpen(false)}
-                      className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-secondary no-underline transition-all duration-200 hover:text-gold hover:bg-edge"
+                      className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-secondary no-underline transition-all duration-200 hover:text-gold ${navHoverBg}`}
                     >
                       <link.icon />
                       {link.label}
@@ -265,7 +265,7 @@ export default function Navbar() {
           {/* ── Right Actions ─────────────────────── */}
           <div className="flex items-center gap-2 shrink-0">
             {/* Search bar */}
-            <div ref={searchRef} className="desktop-search relative items-center">
+            <div ref={searchRef} className="desktop-search hidden md:flex relative items-center">
               <div
                 className={`flex items-center gap-2 rounded-full px-3 py-[0.4rem] transition-all duration-300 w-[160px] focus-within:w-52 ${
                   (scrolled || needDarkText)
@@ -273,7 +273,7 @@ export default function Navbar() {
                     : "bg-white/10 border border-white/10 focus-within:bg-white/20 focus-within:border-white/30"
                 }`}
               >
-                <SearchIcon className={(scrolled || needDarkText) ? "text-muted" : "text-white/50"} />
+                <SearchIcon className={(scrolled || mobileOpen || needDarkText) ? "text-muted" : "text-white/50"} />
                 <input
                   type="text"
                   value={searchQuery}
@@ -281,7 +281,7 @@ export default function Navbar() {
                   onFocus={() => setSearchFocused(true)}
                   placeholder="Search courses..."
                   className={`bg-transparent border-none outline-none text-[0.8rem] w-full font-[inherit] ${
-                    (scrolled || needDarkText)
+                    (scrolled || mobileOpen || needDarkText)
                       ? "text-foreground placeholder:text-muted"
                       : "text-white placeholder:text-white/50"
                   }`}
@@ -302,7 +302,7 @@ export default function Navbar() {
                         key={result._id}
                         href={result.price === 0 ? "/free-courses" : "/paid-courses"}
                         onClick={() => { setSearchQuery(""); setSearchFocused(false); setSearchResults([]); }}
-                        className="flex items-center justify-between px-4 py-3 hover:bg-edge no-underline transition-colors border-b border-edge last:border-b-0"
+                        className="flex items-center justify-between px-4 py-3 hover:bg-card-hover no-underline transition-colors border-b border-edge last:border-b-0"
                       >
                         <span className="text-sm text-foreground font-medium line-clamp-1 flex-1">
                           {result.title}
@@ -322,7 +322,7 @@ export default function Navbar() {
               onClick={toggleTheme}
               aria-label="Toggle theme"
               className={`w-[36px] h-[36px] rounded-full border border-transparent cursor-pointer flex items-center justify-center transition-all duration-300 shrink-0 hover:bg-gold hover:text-[#1A1A1A] hover:shadow-[var(--shadow-glow)] ${
-                (scrolled || needDarkText)
+                (scrolled || mobileOpen || needDarkText)
                   ? "bg-edge text-secondary"
                   : "bg-white/10 text-white/70"
               }`}
@@ -335,7 +335,7 @@ export default function Navbar() {
               <Link
                 href="/sign-in"
                 className={`hidden sm:inline-flex items-center gap-1.5 px-4 py-[0.4rem] rounded-full text-sm font-semibold no-underline transition-all duration-200 shrink-0 ${
-                  (scrolled || needDarkText)
+                  (scrolled || mobileOpen || needDarkText)
                     ? "bg-gold text-[#1A1A1A] hover:shadow-[var(--shadow-glow)]"
                     : "bg-white/15 text-white border border-white/20 hover:bg-white/25"
                 }`}
@@ -355,11 +355,7 @@ export default function Navbar() {
 
             {/* Mobile Hamburger */}
             <button
-              className={`mobile-hamburger w-[36px] h-[36px] rounded-xl border-none cursor-pointer items-center justify-center transition-all duration-200 shrink-0 ${
-                (scrolled || needDarkText)
-                  ? "bg-edge text-secondary"
-                  : "bg-white/10 text-white/70"
-              }`}
+              className={`mobile-hamburger cursor-pointer flex items-center justify-center hover:text-gold transition-all duration-200 shrink-0 ${(scrolled || mobileOpen || needDarkText) ? "text-secondary" : "text-white"}`}
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
@@ -376,88 +372,92 @@ export default function Navbar() {
           onClick={() => setMobileOpen(false)}
         >
           <div
-            className="animate-slide-in-right absolute top-0 right-0 bottom-0 w-[min(320px,85vw)] bg-card border-l border-edge p-6 overflow-y-auto flex flex-col gap-1"
+            className="animate-slide-in-right absolute top-0 right-0 bottom-0 w-[min(300px,80vw)] bg-card border-l border-edge overflow-y-auto flex flex-col"
+            style={{ paddingTop: "72px" }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-end mb-4">
-              <button
-                onClick={() => setMobileOpen(false)}
-                className="w-9 h-9 rounded-full bg-edge border-none cursor-pointer flex items-center justify-center text-secondary"
-              >
-                <CloseIcon />
-              </button>
-            </div>
-
             {/* Mobile search */}
-            <div className="flex items-center gap-2 bg-surface border border-edge rounded-full px-4 py-2.5 mb-4">
-              <SearchIcon className="text-muted" />
-              <input
-                type="text"
-                placeholder="Search courses..."
-                className="bg-transparent border-none outline-none text-[0.9rem] text-foreground w-full font-[inherit] placeholder:text-muted"
-              />
+            <div className="mx-4 mb-3">
+              <div className="flex items-center gap-2 bg-surface border border-edge rounded-xl px-3 py-2">
+                <SearchIcon className="text-muted" />
+                <input
+                  type="text"
+                  placeholder="Search courses..."
+                  className="bg-transparent border-none outline-none text-[0.8rem] text-foreground w-full font-[inherit] placeholder:text-muted"
+                />
+              </div>
             </div>
 
-            {/* All main nav links */}
-            {allMobileLinks.map((link: any) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                target={link.external ? "_blank" : undefined}
-                onClick={() => setMobileOpen(false)}
-                className="py-3 px-4 rounded-xl text-base font-medium text-secondary no-underline transition-all duration-200 hover:text-gold hover:bg-edge"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {/* Nav links */}
+            <div className="flex flex-col px-2">
+              {allMobileLinks.map((link: any) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  target={link.external ? "_blank" : undefined}
+                  onClick={() => setMobileOpen(false)}
+                  className="py-2.5 px-3 rounded-lg text-[0.875rem] font-medium text-foreground no-underline transition-all duration-200 hover:text-gold hover:bg-card-hover"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
 
             {/* Current Affairs section */}
-            <div className="h-px bg-edge my-2" />
-            <p className="text-[0.7rem] font-semibold text-muted uppercase tracking-[1.5px] px-4 pt-1">Current Affairs</p>
-            {caLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 py-3 px-4 rounded-xl text-base font-medium text-secondary no-underline transition-all duration-200 hover:text-gold hover:bg-edge"
-              >
-                <link.icon />
-                {link.label}
-              </Link>
-            ))}
+            <div className="h-px bg-edge mx-4 my-2" />
+            <p className="text-[0.65rem] font-semibold text-muted uppercase tracking-[2px] px-5 py-1">Current Affairs</p>
+            <div className="flex flex-col px-2">
+              {caLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-2.5 py-2.5 px-3 rounded-lg text-[0.875rem] font-medium text-foreground no-underline transition-all duration-200 hover:text-gold hover:bg-card-hover"
+                >
+                  <link.icon />
+                  {link.label}
+                </Link>
+              ))}
+            </div>
 
             {/* More section */}
-            <div className="h-px bg-edge my-2" />
-            <p className="text-[0.7rem] font-semibold text-muted uppercase tracking-[1.5px] px-4 pt-1">More</p>
-            {moreLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 py-3 px-4 rounded-xl text-base font-medium text-secondary no-underline transition-all duration-200 hover:text-gold hover:bg-edge"
-              >
-                <link.icon />
-                {link.label}
-              </Link>
-            ))}
+            <div className="h-px bg-edge mx-4 my-2" />
+            <p className="text-[0.65rem] font-semibold text-muted uppercase tracking-[2px] px-5 py-1">More</p>
+            <div className="flex flex-col px-2">
+              {moreLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-2.5 py-2.5 px-3 rounded-lg text-[0.875rem] font-medium text-foreground no-underline transition-all duration-200 hover:text-gold hover:bg-card-hover"
+                >
+                  <link.icon />
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            {/* Spacer to push login to bottom */}
+            <div className="flex-1" />
 
             {/* Mobile login */}
-            <div className="h-px bg-edge my-2" />
-            {!isSignedIn ? (
-              <Link
-                href="/sign-in"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 py-3 px-4 rounded-xl text-base font-semibold text-gold no-underline transition-all duration-200 hover:bg-edge"
-              >
-                <UserIcon />
-                Login / Sign Up
-              </Link>
-            ) : (
-              <div className="px-4 py-3 flex items-center gap-3">
-                <UserButton />
-                <span className="text-sm text-muted">Account</span>
-              </div>
-            )}
+            <div className="border-t border-edge p-3">
+              {!isSignedIn ? (
+                <Link
+                  href="/sign-in"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-[0.875rem] font-semibold text-inverse no-underline bg-gold transition-all duration-200 hover:opacity-90"
+                >
+                  <UserIcon />
+                  Login / Sign Up
+                </Link>
+              ) : (
+                <div className="px-3 py-2 flex items-center gap-3">
+                  <UserButton />
+                  <span className="text-sm text-muted">Account</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

@@ -31,7 +31,7 @@ export default async function FreeCoursesPage({ searchParams }: PageProps) {
         <span className="inline-block text-xs font-bold text-[#6ABF40] tracking-[2.5px] uppercase mb-3">
           Free Resources
         </span>
-        <h1 className="font-heading font-black text-foreground leading-tight mb-4 text-[clamp(2rem,4vw,3rem)]">
+        <h1 className="font-heading font-black text-foreground leading-tight mb-4 text-3xl md:text-5xl uppercase tracking-tighter">
           Free <span className="text-[#6ABF40]">Courses</span>
         </h1>
         <p className="text-[1rem] text-muted max-w-[480px] mx-auto">
