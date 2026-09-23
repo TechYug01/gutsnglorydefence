@@ -36,6 +36,7 @@
     "@types/web-push": "^3.6.4",
     "eslint": "^10.11.0",
     "eslint-config-next": "16.2.12",
+    "jpeg-js": "^0.4.4",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3"
   },
