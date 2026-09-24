@@ -7,6 +7,7 @@ import { motion, useInView, useMotionValue, useTransform, animate } from "framer
 import { FadeIn, StaggerChildren } from "./FadeIn";
 import { BookOpen, CheckCircle2, Play, Users, Trophy, Medal, Brain, Target, LineChart, Shield } from "lucide-react";
 import CourseCard, { Course } from "./CourseCard";
+import WelcomePopup from "./WelcomePopup";
 
 function Counter({ from = 0, to, duration = 2 }: { from?: number; to: number; duration?: number }) {
   const count = useMotionValue(from);
@@ -26,6 +27,7 @@ function Counter({ from = 0, to, duration = 2 }: { from?: number; to: number; du
 export default function HomePageClient({ courses }: { courses: Course[] }) {
   return (
     <div className="flex flex-col min-h-screen">
+      <WelcomePopup />
       <HeroSection />
       <StatsBar />
       <FeaturesSection />
