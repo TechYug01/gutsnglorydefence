@@ -10,15 +10,10 @@ export default function WelcomePopup() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Only show once per session so it's not overly annoying
-    const hasSeenPopup = sessionStorage.getItem("hasSeenWelcomePopup");
-    if (!hasSeenPopup) {
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-        sessionStorage.setItem("hasSeenWelcomePopup", "true");
-      }, 800);
-      return () => clearTimeout(timer);
-    }
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+    }, 800);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
