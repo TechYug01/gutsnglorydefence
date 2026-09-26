@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Inter, Montserrat } from "next/font/google";
+import { Outfit, Inter, Montserrat, Lato } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import ConditionalLayout from "@/app/components/ConditionalLayout";
@@ -23,6 +23,13 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+const lato = Lato({
+  variable: "--font-lato",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+
 import { constructMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = constructMetadata();
@@ -39,8 +46,8 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="dark"
-      className={`${outfit.variable} ${inter.variable} ${montserrat.variable}`}
+      data-theme="light"
+      className={`${outfit.variable} ${inter.variable} ${montserrat.variable} ${lato.variable}`}
       suppressHydrationWarning
     >
       <body>
@@ -48,7 +55,9 @@ export default async function RootLayout({
           <ConditionalLayout isBlogDomain={true}>{children}</ConditionalLayout>
         ) : (
           <ClerkProvider afterSignOutUrl="/sign-in">
-            <ConditionalLayout isAdminDomain={isAdminDomain} >{children}</ConditionalLayout>
+            <ConditionalLayout isAdminDomain={isAdminDomain}>
+              {children}
+            </ConditionalLayout>
           </ClerkProvider>
         )}
       </body>

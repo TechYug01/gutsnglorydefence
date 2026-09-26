@@ -10,7 +10,6 @@ import {
   useTransform,
   animate,
 } from "framer-motion";
-import { useTheme } from "@/app/context/ThemeContext";
 import {
   BookOpen,
   Video,
@@ -264,11 +263,11 @@ const SectionHeading = ({
     className="text-center mb-16"
   >
     {subtitle && (
-      <span className="text-gold font-semibold tracking-wider uppercase text-sm mb-3 block">
+      <span className="text-[#808000] font-semibold tracking-wider uppercase text-sm mb-3 block">
         {subtitle}
       </span>
     )}
-    <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-[0.2em] text-foreground mb-6">
+    <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-[4px] text-[#1A1A1A] mb-6">
       {title}
     </h2>
     <div className="w-24 h-1.5 bg-gold mx-auto rounded-full" />
@@ -285,12 +284,12 @@ const AccordionItem = ({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border border-gold/20 rounded-2xl mb-4 overflow-hidden bg-surface/50 backdrop-blur-sm transition-all duration-300 hover:border-yellow-500/50">
+    <div className="border border-gold/20 rounded-2xl mb-4 overflow-hidden bg-[#F0EDE8]/50 backdrop-blur-sm transition-all duration-300 hover:border-yellow-500/50">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center p-5 md:p-6 text-left focus:outline-none"
       >
-        <span className="font-semibold text-base md:text-lg text-foreground pr-8">
+        <span className="font-semibold text-base md:text-lg text-[#1A1A1A] pr-8">
           {question}
         </span>
         <ChevronDown
@@ -308,7 +307,7 @@ const AccordionItem = ({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className="px-6 pb-6 text-muted leading-relaxed">{answer}</div>
+            <div className="px-6 pb-6 text-[#7A7A7A] leading-relaxed">{answer}</div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -365,10 +364,10 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
         <div className="w-20 h-20 bg-gold/20 text-gold rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
           <CheckCircle2 className="w-10 h-10" />
         </div>
-        <h3 className="text-2xl font-bold text-foreground mb-2">
+        <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2">
           Redirecting...
         </h3>
-        <p className="text-muted">
+        <p className="text-[#7A7A7A]">
           Taking you to the course page. Please wait.
         </p>
       </div>
@@ -385,7 +384,7 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-muted ml-1">
+          <label className="text-sm font-semibold text-[#7A7A7A] ml-1">
             Full Name
           </label>
           <input
@@ -393,12 +392,12 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
             type="text"
             name="name"
             placeholder="Your Name"
-            className="w-full bg-background border border-gold/20 rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-gold transition-colors"
+            className="w-full bg-[#FAF8F5] border border-gold/20 rounded-xl px-4 py-3 text-[#1A1A1A] focus:outline-none focus:border-gold transition-colors"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-muted ml-1">
+          <label className="text-sm font-semibold text-[#7A7A7A] ml-1">
             Email Address
           </label>
           <input
@@ -406,13 +405,13 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
             type="email"
             name="email"
             placeholder="example@example.com"
-            className="w-full bg-background border border-gold/20 rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-gold transition-colors"
+            className="w-full bg-[#FAF8F5] border border-gold/20 rounded-xl px-4 py-3 text-[#1A1A1A] focus:outline-none focus:border-gold transition-colors"
           />
         </div>
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-semibold text-muted ml-1">
+        <label className="text-sm font-semibold text-[#7A7A7A] ml-1">
           Mobile Number
         </label>
         <input
@@ -420,19 +419,19 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
           type="tel"
           name="mobile"
           placeholder="+91-9876543210"
-          className="w-full bg-background border border-gold/20 rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-gold transition-colors"
+          className="w-full bg-[#FAF8F5] border border-gold/20 rounded-xl px-4 py-3 text-[#1A1A1A] focus:outline-none focus:border-gold transition-colors"
         />
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-semibold text-muted ml-1">
+        <label className="text-sm font-semibold text-[#7A7A7A] ml-1">
           Select Course
         </label>
         <select
           required
           name="course"
           defaultValue={defaultCourse}
-          className="w-full bg-background border border-gold/20 rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-gold transition-colors appearance-none"
+          className="w-full bg-[#FAF8F5] border border-gold/20 rounded-xl px-4 py-3 text-[#1A1A1A] focus:outline-none focus:border-gold transition-colors appearance-none"
         >
           <option value="CDS 1 2027">CDS 1 2027</option>
           <option value="AFCAT 1 2027">AFCAT 1 2027</option>
@@ -442,7 +441,7 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
       <button
         disabled={loading}
         type="submit"
-        className="w-full px-8 py-4 mt-4 rounded-xl font-black text-black transition-all bg-gold hover:bg-gold-hover shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] disabled:opacity-70 disabled:cursor-not-allowed"
+        className="w-full px-8 py-4 mt-4 rounded-xl font-black text-[#1A1A1A] transition-all bg-gold hover:bg-gold-hover shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {loading ? "Submitting..." : "Reserve Your Seat"}
       </button>
@@ -456,7 +455,12 @@ export default function CampaignLandingPage({
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const { theme, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    // Force light mode for these landing pages
+    document.documentElement.setAttribute("data-theme", "light");
+    document.documentElement.classList.remove("dark");
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -475,13 +479,13 @@ export default function CampaignLandingPage({
   const whatsappUrl = `https://wa.me/918319590298?text=${encodeURIComponent(whatsappMsg)}`; // Replace with actual number
 
   return (
-    <div className="min-h-screen bg-card selection:bg-yellow-500/30 font-sans text-foreground">
+    <div className="min-h-screen bg-white selection:bg-yellow-500/30 font-sans text-[#1A1A1A]">
       {/* HEADER */}
       <header
         className={cn(
           "fixed top-0 inset-x-0 z-50 transition-all duration-300 border-b border-transparent",
           isScrolled || mobileMenuOpen
-            ? "bg-[var(--bg-navbar)] backdrop-blur-xl border-gold/20 shadow-sm py-4"
+            ? "bg-[rgba(250,248,245,0.85)] backdrop-blur-xl border-gold/20 shadow-sm py-4"
             : "bg-transparent py-6",
         )}
       >
@@ -500,13 +504,12 @@ export default function CampaignLandingPage({
               priority
               className="rounded-full object-cover shadow-sm"
             />
-            <span className="text-xl font-bold tracking-tight text-foreground">
-              GUTS N GLORY{" "}
-              <span className="text-gold dark:text-yellow-500">DEFENCE</span>
+            <span className="text-xl font-bold tracking-tight text-[#1A1A1A]">
+              GUTS N GLORY <span className="text-gold">DEFENCE</span>
             </span>
           </div>
 
-          <nav className="hidden lg:flex items-center gap-8 font-bold text-sm text-foreground">
+          <nav className="hidden lg:flex items-center gap-8 font-bold text-sm text-[#1A1A1A]">
             <a
               href="#courses"
               className="hover:text-gold-hover transition-colors"
@@ -537,27 +540,17 @@ export default function CampaignLandingPage({
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
-            <button
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
-              className={`w-9 h-9 rounded-full border border-transparent cursor-pointer flex items-center justify-center transition-all duration-300 shrink-0 hover:bg-gold hover:text-black hover:shadow-[var(--shadow-glow)] ${
-                isScrolled
-                  ? "bg-edge text-secondary"
-                  : "bg-foreground/10 text-foreground"
-              }`}
-            >
-              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
+            {/* Theme toggle removed to force light mode */}
             <a
               href="#enroll-form"
-              className="px-6 py-2.5 rounded-full font-semibold text-sm bg-gold hover:bg-gold-hover text-black transition-all shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] active:scale-95"
+              className="px-6 py-2.5 rounded-full font-semibold text-sm bg-gold hover:bg-gold-hover text-[#1A1A1A] transition-all shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] active:scale-95"
             >
               ENROL NOW
             </a>
           </div>
 
           <button
-            className="lg:hidden text-foreground"
+            className="lg:hidden text-[#1A1A1A]"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
@@ -584,16 +577,16 @@ export default function CampaignLandingPage({
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="fixed top-0 right-0 h-screen w-[min(300px,80vw)] bg-card z-[70] shadow-2xl flex flex-col border-l border-edge lg:hidden overflow-y-auto"
+                className="fixed top-0 right-0 h-screen w-[min(300px,80vw)] bg-white z-[70] shadow-2xl flex flex-col border-l border-black/10 lg:hidden overflow-y-auto"
               >
                 {/* Header with close */}
-                <div className="flex items-center justify-between px-5 py-4 border-b border-edge">
+                <div className="flex items-center justify-between px-5 py-4 border-b border-black/10">
                   <span className="text-sm font-bold text-gold uppercase tracking-[2px]">
                     Menu
                   </span>
                   <button
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-8 h-8 rounded-full bg-surface flex items-center justify-center text-muted hover:text-gold hover:bg-card-hover transition-all duration-200"
+                    className="w-8 h-8 rounded-full bg-[#F0EDE8] flex items-center justify-center text-[#7A7A7A] hover:text-gold hover:bg-[#F7F5F2] transition-all duration-200"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -612,7 +605,7 @@ export default function CampaignLandingPage({
                       key={item.label}
                       href={item.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="py-3 px-4 rounded-xl text-[0.9rem] font-medium text-foreground no-underline transition-all duration-200 hover:text-gold hover:bg-card-hover hover:pl-5"
+                      className="py-3 px-4 rounded-xl text-[0.9rem] font-medium text-[#1A1A1A] no-underline transition-all duration-200 hover:text-gold hover:bg-[#F7F5F2] hover:pl-5"
                     >
                       {item.label}
                     </a>
@@ -622,23 +615,14 @@ export default function CampaignLandingPage({
                 {/* Spacer */}
                 <div className="flex-1" />
 
-                {/* Theme Toggle */}
-                <div className="px-4 py-2">
-                  <button
-                    onClick={toggleTheme}
-                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-foreground bg-surface hover:bg-card-hover transition-all duration-200"
-                  >
-                    {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-                    {theme === "dark" ? "Light Mode" : "Dark Mode"}
-                  </button>
-                </div>
+                {/* Theme Toggle removed to force light mode */}
 
                 {/* CTA */}
-                <div className="p-4 border-t border-edge">
+                <div className="p-4 border-t border-black/10">
                   <a
                     href="#enroll-form"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold text-inverse no-underline bg-gold shadow-[0_0_15px_rgba(250,204,21,0.2)] transition-all duration-200 hover:shadow-[0_0_25px_rgba(250,204,21,0.4)] active:scale-[0.98]"
+                    className="flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold text-white no-underline bg-gold shadow-[0_0_15px_rgba(250,204,21,0.2)] transition-all duration-200 hover:shadow-[0_0_25px_rgba(250,204,21,0.4)] active:scale-[0.98]"
                   >
                     ENROL NOW <ArrowRight className="w-4 h-4" />
                   </a>
@@ -652,25 +636,32 @@ export default function CampaignLandingPage({
       {/* HERO SECTION */}
       <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex items-center justify-center min-h-[90vh]">
         {/* Abstract Background Elements */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold/20 blur-[120px] rounded-full pointer-events-none" />
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/10 blur-[100px] rounded-full pointer-events-none" />
-
+        <Image
+          src="/background.jpg"
+          alt="Background Image"
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+          width={1920}
+          height={1080}
+        />
+        {/* Overlay to fade the background */}
+        <div className="absolute inset-0 bg-[#FAF8F5]/80 z-0" />
         <div className="container mx-auto px-4 md:px-6 relative z-10 text-center max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/5 dark:bg-white/5 border border-gold/10/10 dark:border-white/10 backdrop-blur-md mb-8 text-sm font-semibold text-gold"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 border border-gold/30 shadow-sm backdrop-blur-md mb-8 text-sm font-semibold text-[#808000]"
           >
             <Shield className="w-4 h-4" />
-            <span>{examType} 1 2027 Preparation Courses</span>
+            <span>{examType} 1 2027 Preparation Course</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1] mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl tracking-tight text-[#1A1A1A] leading-[1.1] mb-6"
+            style={{ fontFamily: "var(--font-inter)", fontWeight: 800 }}
           >
             Preparing for {examType} 1 2027?
           </motion.h1>
@@ -679,7 +670,8 @@ export default function CampaignLandingPage({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base md:text-lg text-muted max-w-3xl mx-auto mb-10 leading-relaxed"
+            className="text-base md:text-lg text-[#1A1A1A] max-w-3xl mx-auto mb-10 leading-relaxed "
+            style={{ fontFamily: "var(--font-lato)", fontWeight: 400 }}
           >
             Start your journey with GUTS N GLORY DEFENCE and Prepare
             systematically for {examType} 1 2027 with structured courses
@@ -695,7 +687,7 @@ export default function CampaignLandingPage({
           >
             <a
               href="#courses"
-              className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-foreground bg-gold hover:bg-gold-hover transition-all shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] active:scale-95 flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-[#1A1A1A] bg-gold hover:bg-gold-hover transition-all shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] active:scale-95 flex items-center justify-center gap-2"
             >
               Explore Courses <ArrowRight className="w-5 h-5" />
             </a>
@@ -703,7 +695,7 @@ export default function CampaignLandingPage({
               href={whatsappUrl}
               target="_blank"
               rel="noreferrer"
-              className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-foreground bg-surface hover:bg-card-hover hover:bg-card-hover transition-all active:scale-95 flex items-center justify-center gap-2 border border-transparent border-edge"
+              className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-[#1A1A1A] bg-white hover:bg-[#F0EDE8] transition-all active:scale-95 flex items-center justify-center gap-2 border border-black/10 shadow-md"
             >
               <MessageCircle className="w-5 h-5" /> Talk to a Mentor
             </a>
@@ -713,10 +705,8 @@ export default function CampaignLandingPage({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.8 }}
-            className="mt-16 pt-8 border-t border-gold/20 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-muted dark:text-muted"
+            className="mt-16 pt-8 border-t border-gold/20 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-[#808000]"
           >
-            <span>CDS 1 2027</span>
-            <span className="hidden sm:block">•</span>
             <span>{examType} 1 2027</span>
             <span className="hidden sm:block">•</span>
             <span>Online Classes</span>
@@ -731,29 +721,29 @@ export default function CampaignLandingPage({
       </section>
 
       {/* BATCH COUNTDOWN */}
-      <section className="py-8 bg-surface border-y border-gold/30">
+      <section className="py-8 bg-[#F0EDE8] border-y border-gold/30">
         <div className="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-center gap-8 text-center md:text-left">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-foreground/20 rounded-full flex items-center justify-center">
-              <Clock className="w-6 h-6 text-foreground" />
+              <Clock className="w-6 h-6 text-[#1A1A1A]" />
             </div>
             <div>
-              <h3 className="text-foreground font-bold tracking-wider text-sm mb-1 uppercase">
+              <h3 className="text-[#1A1A1A] font-bold tracking-wider text-sm mb-1 uppercase">
                 Next Batch Starts Soon
               </h3>
-              <p className="text-secondary text-sm md:text-base font-medium">
+              <p className="text-[#4A4A4A] text-sm md:text-base font-medium">
                 {examType} 1 2027
               </p>
             </div>
           </div>
           <div className="hidden md:block w-px h-12 bg-foreground/20" />
           <div className="flex flex-col sm:flex-row items-center gap-6">
-            <span className="text-foreground font-semibold text-lg">
+            <span className="text-[#1A1A1A] font-semibold text-lg">
               Limited Batch Seats
             </span>
             <a
               href="#enroll-form"
-              className="px-6 py-2 bg-gold text-black font-black rounded-full hover:bg-gold-hover transition-all shadow-[0_0_15px_rgba(250,204,21,0.3)]"
+              className="px-6 py-2 bg-gold text-[#1A1A1A] font-black rounded-full hover:bg-gold-hover transition-all shadow-[0_0_15px_rgba(250,204,21,0.3)]"
             >
               Reserve Your Seat &rarr;
             </a>
@@ -781,7 +771,7 @@ export default function CampaignLandingPage({
 
             <a
               href="#enroll-form"
-              className="w-full block text-center px-6 py-4 rounded-xl font-bold text-black bg-gold shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] transition-all"
+              className="w-full block text-center px-6 py-4 rounded-xl font-bold text-[#1A1A1A] bg-gold shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] transition-all"
             >
               Enroll in {examType} 1 2027 &rarr;
             </a>
@@ -790,14 +780,14 @@ export default function CampaignLandingPage({
       </section>
 
       {/* WHAT YOU GET */}
-      <section className="py-12 md:py-24 bg-background relative border-y border-gold/10 overflow-hidden">
+      <section className="py-12 md:py-24 bg-[#FAF8F5] relative border-y border-gold/10 overflow-hidden">
         {/* Glow effects */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/5 blur-[120px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl">
           <div className="text-center mb-16">
             <span className="text-gold font-bold tracking-widest uppercase text-sm mb-4 block"></span>
-            <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-tighter text-foreground mb-6">
+            <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-tighter text-[#1A1A1A] mb-6">
               WHAT WE OFFER
             </h2>
             <div className="w-24 h-1 bg-gold mx-auto rounded-full opacity-50" />
@@ -808,7 +798,7 @@ export default function CampaignLandingPage({
               <motion.div
                 key={idx}
                 whileHover={{ y: -5, scale: 1.02 }}
-                className="group relative bg-card p-5 md:p-6 rounded-3xl border border-gold/20 hover:border-gold/60 transition-all duration-300 overflow-hidden shadow-lg hover:shadow-[0_0_30px_rgba(212,184,94,0.15)] flex flex-col items-center sm:items-start text-center sm:text-left"
+                className="group relative bg-white p-5 md:p-6 rounded-3xl border border-gold/20 hover:border-gold/60 transition-all duration-300 overflow-hidden shadow-lg hover:shadow-[0_0_30px_rgba(212,184,94,0.15)] flex flex-col items-center sm:items-start text-center sm:text-left"
               >
                 {/* Subtle gradient overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FACC15]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -816,10 +806,10 @@ export default function CampaignLandingPage({
                 <div className="w-14 h-14 rounded-2xl bg-gold/10 text-gold flex items-center justify-center mb-5 border border-gold/30 group-hover:scale-110 transition-transform duration-300 relative z-10 shadow-[0_0_15px_rgba(212,184,94,0.15)]">
                   {item.icon}
                 </div>
-                <h3 className="font-bold text-base md:text-lg text-foreground mb-2 relative z-10 group-hover:text-gold transition-colors">
+                <h3 className="font-bold text-base md:text-lg text-[#1A1A1A] mb-2 relative z-10 group-hover:text-gold transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-muted text-sm leading-relaxed relative z-10">
+                <p className="text-[#7A7A7A] text-sm leading-relaxed relative z-10">
                   {item.desc}
                 </p>
               </motion.div>
@@ -844,15 +834,15 @@ export default function CampaignLandingPage({
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 key={idx}
-                className="bg-surface/50 border border-gold/20 rounded-2xl md:rounded-3xl p-5 md:p-8 hover:border-yellow-500/50 transition-colors group"
+                className="bg-[#F0EDE8]/50 border border-gold/20 rounded-2xl md:rounded-3xl p-5 md:p-8 hover:border-yellow-500/50 transition-colors group"
               >
-                <div className="w-12 h-12 rounded-xl bg-surface flex items-center justify-center text-gold mb-6 group-hover:scale-110 group-hover:bg-gold group-hover:text-black transition-all duration-300 [&_svg]:transition-colors [&_svg]:duration-300 group-hover:[&_svg]:text-black">
+                <div className="w-12 h-12 rounded-xl bg-[#F0EDE8] flex items-center justify-center text-gold mb-6 group-hover:scale-110 group-hover:bg-gold group-hover:text-[#1A1A1A] transition-all duration-300 [&_svg]:transition-colors [&_svg]:duration-300 group-hover:[&_svg]:text-[#1A1A1A]">
                   {item.icon}
                 </div>
-                <h3 className="text-base md:text-lg font-bold text-foreground mb-3">
+                <h3 className="text-base md:text-lg font-bold text-[#1A1A1A] mb-3">
                   {item.title}
                 </h3>
-                <p className="text-muted leading-relaxed">{item.desc}</p>
+                <p className="text-[#7A7A7A] leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -860,7 +850,7 @@ export default function CampaignLandingPage({
       </section>
 
       {/* FACULTY */}
-      <section id="faculty" className="py-12 md:py-24 bg-card">
+      <section id="faculty" className="py-12 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <SectionHeading
             title="MEET YOUR DEFENCE EXAM MENTORS"
@@ -875,9 +865,9 @@ export default function CampaignLandingPage({
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 key={idx}
-                className="bg-surface border border-gold/20 rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 group"
+                className="bg-[#F0EDE8] border border-gold/20 rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 group"
               >
-                <div className="h-64 bg-surface relative overflow-hidden flex items-center justify-center">
+                <div className="h-64 bg-[#F0EDE8] relative overflow-hidden flex items-center justify-center">
                   <Image
                     src={faculty.image}
                     alt={faculty.name}
@@ -894,10 +884,10 @@ export default function CampaignLandingPage({
                   </div>
                 </div>
                 <div className="p-6">
-                  <p className="text-muted text-sm mb-4 line-clamp-3">
+                  <p className="text-[#7A7A7A] text-sm mb-4 line-clamp-3">
                     {faculty.bio}
                   </p>
-                  <div className="pt-4 border-t border-slate-100 dark:border-gold/10 text-xs font-semibold tracking-wider text-muted uppercase">
+                  <div className="pt-4 border-t border-slate-100 text-xs font-semibold tracking-wider text-[#7A7A7A] uppercase">
                     {faculty.stats}
                   </div>
                 </div>
@@ -908,7 +898,7 @@ export default function CampaignLandingPage({
       </section>
 
       {/* RESULTS / SOCIAL PROOF */}
-      <section className="py-12 md:py-24 relative overflow-hidden bg-surface text-gold">
+      <section className="py-12 md:py-24 relative overflow-hidden bg-[#F0EDE8] text-gold">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent bg-[length:20px_20px]" />
 
@@ -917,7 +907,7 @@ export default function CampaignLandingPage({
             <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-tighter mb-4">
               OUR JOURNEY SO FAR
             </h2>
-            <p className="text-secondary text-lg max-w-2xl mx-auto">
+            <p className="text-[#4A4A4A] text-lg max-w-2xl mx-auto">
               A legacy of structured preparation and dedicated guidance.
             </p>
           </div>
@@ -929,11 +919,11 @@ export default function CampaignLandingPage({
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, type: "spring" }}
-                className="text-2xl md:text-4xl font-extrabold mb-2 text-foreground"
+                className="text-2xl md:text-4xl font-extrabold mb-2 text-[#1A1A1A]"
               >
                 <Counter to={5000} duration={2} />+
               </motion.div>
-              <div className="text-secondary text-sm md:text-base font-medium">
+              <div className="text-[#4A4A4A] text-sm md:text-base font-medium">
                 Candidates Trained
               </div>
             </div>
@@ -943,11 +933,11 @@ export default function CampaignLandingPage({
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, type: "spring" }}
-                className="text-2xl md:text-4xl font-extrabold mb-2 text-foreground"
+                className="text-2xl md:text-4xl font-extrabold mb-2 text-[#1A1A1A]"
               >
                 <Counter to={500} duration={2} />+
               </motion.div>
-              <div className="text-secondary text-sm md:text-base font-medium">
+              <div className="text-[#4A4A4A] text-sm md:text-base font-medium">
                 Selections
               </div>
             </div>
@@ -957,11 +947,11 @@ export default function CampaignLandingPage({
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, type: "spring" }}
-                className="text-2xl md:text-4xl font-extrabold mb-2 text-foreground"
+                className="text-2xl md:text-4xl font-extrabold mb-2 text-[#1A1A1A]"
               >
                 <Counter to={10000} duration={2} />+
               </motion.div>
-              <div className="text-secondary text-sm md:text-base font-medium">
+              <div className="text-[#4A4A4A] text-sm md:text-base font-medium">
                 Mocks Conducted
               </div>
             </div>
@@ -971,11 +961,11 @@ export default function CampaignLandingPage({
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, type: "spring" }}
-                className="text-2xl md:text-4xl font-extrabold mb-2 text-foreground"
+                className="text-2xl md:text-4xl font-extrabold mb-2 text-[#1A1A1A]"
               >
                 <Counter to={15} duration={2} />+
               </motion.div>
-              <div className="text-secondary text-sm md:text-base font-medium">
+              <div className="text-[#4A4A4A] text-sm md:text-base font-medium">
                 Years of Combined
                 <br />
                 Experience
@@ -1000,20 +990,20 @@ export default function CampaignLandingPage({
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 key={idx}
-                className="bg-surface border border-gold/20 p-5 md:p-8 rounded-2xl md:rounded-3xl relative hover:border-gold/60 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(250,204,21,0.1)] transition-all duration-300"
+                className="bg-[#F0EDE8] border border-gold/20 p-5 md:p-8 rounded-2xl md:rounded-3xl relative hover:border-gold/60 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(250,204,21,0.1)] transition-all duration-300"
               >
                 <div className="flex gap-1 text-amber-500 mb-6">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 fill-current" />
                   ))}
                 </div>
-                <p className="text-muted mb-8 italic">"{testimonial.text}"</p>
+                <p className="text-[#7A7A7A] mb-8 italic">"{testimonial.text}"</p>
                 <div className="flex items-center gap-4 mt-auto">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-gold/10 text-gold rounded-full flex items-center justify-center font-bold text-lg">
                     {testimonial.name.charAt(0)}
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm md:text-base text-foreground">
+                    <h4 className="font-bold text-sm md:text-base text-[#1A1A1A]">
                       {testimonial.name}
                     </h4>
                     <p className="text-sm text-gold">
@@ -1028,7 +1018,7 @@ export default function CampaignLandingPage({
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-12 md:py-24 bg-card">
+      <section id="faq" className="py-12 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6 max-w-4xl">
           <SectionHeading
             title="Frequently Asked Questions"
@@ -1050,15 +1040,15 @@ export default function CampaignLandingPage({
       {/* ENROLLMENT FORM */}
       <section
         id="enroll-form"
-        className="py-12 md:py-24 relative overflow-hidden bg-background border-t border-gold/10"
+        className="py-12 md:py-24 relative overflow-hidden bg-[#FAF8F5] border-t border-gold/10"
       >
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gold/10 blur-[100px] rounded-full pointer-events-none" />
         <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-3xl">
           <div className="text-center mb-12">
-            <h2 className="text-[clamp(1.5rem,4vw,3rem)] font-bold text-foreground mb-6">
+            <h2 className="text-[clamp(1.5rem,4vw,3rem)] font-bold text-[#1A1A1A] mb-6">
               Enroll in {examType} 1 2027 Course
             </h2>
-            <p className="text-base md:text-lg text-muted">
+            <p className="text-base md:text-lg text-[#7A7A7A]">
               Fill out the form below to reserve your seat and access the most
               structured {examType} preparation course.
             </p>
@@ -1069,7 +1059,7 @@ export default function CampaignLandingPage({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-card p-5 md:p-10 rounded-3xl border border-gold/20 shadow-2xl relative overflow-hidden"
+            className="bg-white p-5 md:p-10 rounded-3xl border border-gold/20 shadow-2xl relative overflow-hidden"
           >
             {/* Form Glow */}
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-gold/20 blur-[60px] rounded-full pointer-events-none" />
@@ -1077,7 +1067,7 @@ export default function CampaignLandingPage({
             <LeadForm defaultCourse={`${examType} 1 2027`} />
           </motion.div>
 
-          <p className="text-muted font-medium text-center mt-10">
+          <p className="text-[#7A7A7A] font-medium text-center mt-10">
             Have Questions?{" "}
             <a
               href={whatsappUrl}
@@ -1092,7 +1082,7 @@ export default function CampaignLandingPage({
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-[var(--bg-footer)] py-8 md:py-12 text-muted border-t border-gold/10 text-center text-sm">
+      <footer className="bg-[#1A1A1A] py-8 md:py-12 text-[#7A7A7A] border-t border-gold/10 text-center text-sm">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex items-center justify-center gap-2 mb-6">
             <Image
@@ -1146,20 +1136,20 @@ export default function CampaignLandingPage({
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-xl bg-card p-6 md:p-8 rounded-3xl border border-gold/20 shadow-2xl overflow-y-auto max-h-[90vh] z-10"
+              className="relative w-full max-w-xl bg-white p-6 md:p-8 rounded-3xl border border-gold/20 shadow-2xl overflow-y-auto max-h-[90vh] z-10"
             >
               <button
                 onClick={() => setShowPopup(false)}
-                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-surface text-muted hover:text-gold hover:bg-card-hover transition-all z-20"
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#F0EDE8] text-[#7A7A7A] hover:text-gold hover:bg-[#F7F5F2] transition-all z-20"
               >
                 <X className="w-5 h-5" />
               </button>
 
               <div className="text-center mb-6 pt-2">
-                <h2 className="text-2xl font-bold text-foreground mb-2">
+                <h2 className="text-2xl font-bold text-[#1A1A1A] mb-2">
                   Enroll in {examType} 1 2027 Course
                 </h2>
-                <p className="text-sm text-muted">
+                <p className="text-sm text-[#7A7A7A]">
                   Reserve your seat and access the most structured {examType}{" "}
                   preparation course.
                 </p>
