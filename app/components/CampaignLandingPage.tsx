@@ -2,7 +2,15 @@
 import Image from "next/image";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, useInView, useMotionValue, useTransform, animate } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useInView,
+  useMotionValue,
+  useTransform,
+  animate,
+} from "framer-motion";
+import { useTheme } from "@/app/context/ThemeContext";
 import {
   BookOpen,
   Video,
@@ -18,6 +26,8 @@ import {
   TrendingUp,
   Shield,
   Star,
+  Sun,
+  Moon,
   Menu,
   X,
   ArrowRight,
@@ -76,49 +86,85 @@ const getFaqData = (examType: "AFCAT" | "CDS") => [
   },
 ];
 
-const WHY_US_DATA = [
+const getWhyUsData = (examType: string) => [
   {
-    title: "01 — Structured Preparation",
-    desc: "Follow a planned preparation journey instead of studying randomly.",
-    icon: <CalendarDays className="w-6 h-6" />,
+    title: `01 Proven ${examType} Maths Expertise`,
+    desc: `Learn from Kaushal Sir – Maths Commander, who has helped 5,000+ students crack the ${examType} exam.`,
+    icon: <CalendarDays className="w-6 h-6 text-gold" />,
   },
   {
-    title: "02 — Exam-Focused Learning",
-    desc: "Lessons and practice are aligned with the relevant examination syllabus and question patterns.",
-    icon: <Target className="w-6 h-6" />,
+    title: `02 Complete ${examType} 2027 Coaching`,
+    desc: `Get comprehensive ${examType} coaching for Maths, English and General Studies under one program.`,
+    icon: <Target className="w-6 h-6 text-gold" />,
   },
   {
-    title: "03 — Complete Subject Coverage",
-    desc: "Cover the subjects required for your chosen examination in one structured program.",
-    icon: <BookMarked className="w-6 h-6" />,
+    title: `03 ${examType} PYQ-Based Preparation`,
+    desc: `Master important concepts with ${examType} Previous-Year Questions (PYQs) and exam-focused practice.`,
+    icon: <BookMarked className="w-6 h-6 text-gold" />,
   },
   {
-    title: "04 — Practice & Mock Tests",
-    desc: "Regular practice and mock tests help candidates measure progress and identify areas requiring more work.",
-    icon: <ClipboardList className="w-6 h-6" />,
+    title: `04 Complete ${examType} Study Material`,
+    desc: `Access ${examType} notes, study material and revision resources for structured preparation.`,
+    icon: <ClipboardList className="w-6 h-6 text-gold" />,
   },
   {
-    title: "05 — Previous-Year Questions",
-    desc: "Use previous-year questions to understand the type and level of questions asked in the examination.",
-    icon: <FileText className="w-6 h-6" />,
+    title: `05 ${examType} Mock Tests & Practice`,
+    desc: `Improve speed, accuracy and exam performance with regular ${examType} practice and mock tests.`,
+    icon: <FileText className="w-6 h-6 text-gold" />,
   },
   {
-    title: "06 — Expert Guidance",
-    desc: "Learn through structured guidance from experienced educators and defence-exam mentors.",
-    icon: <Users className="w-6 h-6" />,
+    title: "06 Written Exam to SSB Guidance",
+    desc: `Get a complete ${examType} preparation approach, supporting your journey from the written exam towards SSB preparation.`,
+    icon: <Users className="w-6 h-6 text-gold" />,
   },
 ];
 
-const WHAT_YOU_GET = [
-  { title: "Live Classes", icon: <MonitorPlay className="w-6 h-6" /> },
-  { title: "Recorded Lectures", icon: <Video className="w-6 h-6" /> },
-  { title: "Study Material", icon: <BookOpen className="w-6 h-6" /> },
-  { title: "Practice Questions", icon: <BrainCircuit className="w-6 h-6" /> },
-  { title: "Previous-Year Papers", icon: <FileText className="w-6 h-6" /> },
-  { title: "Mock Tests", icon: <ClipboardList className="w-6 h-6" /> },
-  { title: "Doubt Sessions", icon: <MessageSquare className="w-6 h-6" /> },
-  { title: "Performance Tracking", icon: <BarChart className="w-6 h-6" /> },
-  { title: "Exam Strategy", icon: <Target className="w-6 h-6" /> },
+const getWhatYouGet = (examType: string) => [
+  {
+    title: "Live Classes",
+    desc: "Live Classes with Kaushal Sir, Maths Commander, 5000+ Student Success so far.",
+    icon: <MonitorPlay className="w-6 h-6 text-gold" />,
+  },
+  {
+    title: "Recorded Lectures",
+    desc: "Every Class will be recorded on the app and students will be having 9 months of validity",
+    icon: <Video className="w-6 h-6 text-gold" />,
+  },
+  {
+    title: "Study Material",
+    desc: `Get structured notes and study resources for Maths, GS and English for ${examType} 1 2027`,
+    icon: <BookOpen className="w-6 h-6 text-gold" />,
+  },
+  {
+    title: "Practice Questions",
+    desc: `Build speed and accuracy with ${examType}-focused practice questions.`,
+    icon: <BrainCircuit className="w-6 h-6 text-gold" />,
+  },
+  {
+    title: "Previous-Year Papers",
+    desc: `Understand the exam pattern through ${examType} previous-year questions and papers.`,
+    icon: <FileText className="w-6 h-6 text-gold" />,
+  },
+  {
+    title: "Mock Tests",
+    desc: `Experience exam-like ${examType} mock tests and assess your preparation.`,
+    icon: <ClipboardList className="w-6 h-6 text-gold" />,
+  },
+  {
+    title: "Doubt Sessions",
+    desc: "Get your concepts clarified through dedicated doubt-solving sessions.",
+    icon: <MessageSquare className="w-6 h-6 text-gold" />,
+  },
+  {
+    title: "Performance Tracking",
+    desc: "Track your progress and identify strengths and improvement areas.",
+    icon: <BarChart className="w-6 h-6 text-gold" />,
+  },
+  {
+    title: "Exam Strategy",
+    desc: `Learn smart preparation, time management and exam-taking strategies for ${examType} 2027.`,
+    icon: <Target className="w-6 h-6 text-gold" />,
+  },
 ];
 
 const TESTIMONIALS = [
@@ -140,33 +186,55 @@ const TESTIMONIALS = [
     batch: "2023 Batch",
     text: "Guts N Glory gave me the exact strategy I needed. The previous year question breakdowns helped me understand the UPSC pattern deeply. Truly the best guidance.",
   },
+  {
+    name: "Neha Rajput",
+    exam: "AFCAT 1",
+    batch: "2023 Batch",
+    text: "The detailed notes and targeted practice sessions were a game-changer. I passed my written exam purely by following their exact roadmap.",
+  },
+  {
+    name: "Vivek Choudhary",
+    exam: "CDS 2",
+    batch: "2023 Batch",
+    text: "Maths was my biggest weakness, but Kaushal Sir's shortcuts made it so easy. I not only cleared the written exam but scored really well.",
+  },
 ];
 
 const FACULTY = [
   {
-    name: "Vikram Singh",
-    subject: "General Studies & Strategy",
-    bio: "Ex-Defence personnel with 8+ years of teaching experience. Mastered the art of decoding UPSC GS papers.",
-    stats: "8+ Yrs Exp | GS Expert | 1000+ Classes",
+    name: "Kaushal Sir",
+    subject: "Maths Commander",
+    bio: "A dedicated CDS Maths mentor known for simplifying complex concepts with exam-focused techniques, shortcuts and strategic problem-solving.",
+    stats: "8+ YRS EXP | MATHS EXPERT | 10,000+ CLASSES",
+    image: "/Kaushal.jpeg",
   },
   {
-    name: "Neha Sharma",
-    subject: "English Comprehension",
-    bio: "Specialist in English grammar and vocabulary for defence exams. Known for simplifying complex rules.",
-    stats: "5+ Yrs Exp | English Expert | 800+ Classes",
+    name: "Alok Kumar Mishra",
+    subject: "SSB Mentor & Defence Expert",
+    bio: "AIR 29 | SSB Recommended | NDA, CDS & AFCAT Cleared, bringing first-hand defence examination and SSB experience to student preparation.",
+    stats: "5+ YRS EXP | SSB MENTOR | DEFENCE EXPERT",
+    image: "/Alok.jpeg",
   },
   {
-    name: "Rahul Desai",
-    subject: "Mathematics & Aptitude",
-    bio: "Math wizard who simplifies arithmetic and advanced math with quick, time-saving techniques.",
-    stats: "7+ Yrs Exp | Math Expert | 1200+ Classes",
+    name: "Apurva Ma’am",
+    subject: "General Studies Coach",
+    bio: "A dedicated GS mentor focused on building strong fundamentals, exam awareness and CDS-oriented preparation.",
+    stats: "3+ YRS EXP | GS COACH | 3,000+ STUDENTS TRAINED",
+    image: "/Apurva.jpeg",
   },
 ];
 
 // --- COMPONENTS ---
 
-
-function Counter({ from = 0, to, duration = 2 }: { from?: number; to: number; duration?: number }) {
+function Counter({
+  from = 0,
+  to,
+  duration = 2,
+}: {
+  from?: number;
+  to: number;
+  duration?: number;
+}) {
   const count = useMotionValue(from);
   const rounded = useTransform(count, (latest) => Math.round(latest));
   const ref = React.useRef(null);
@@ -185,10 +253,10 @@ const SectionHeading = ({
   title,
   subtitle,
 }: {
-  title: string;
+  title: React.ReactNode;
   subtitle?: string;
 }) => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
@@ -200,7 +268,9 @@ const SectionHeading = ({
         {subtitle}
       </span>
     )}
-    <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-tighter text-foreground mb-6">{title}</h2>
+    <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-[0.2em] text-foreground mb-6">
+      {title}
+    </h2>
     <div className="w-24 h-1.5 bg-gold mx-auto rounded-full" />
   </motion.div>
 );
@@ -238,9 +308,7 @@ const AccordionItem = ({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className="px-6 pb-6 text-muted leading-relaxed">
-              {answer}
-            </div>
+            <div className="px-6 pb-6 text-muted leading-relaxed">{answer}</div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -287,22 +355,22 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
   };
 
   if (success) {
+    const redirectUrl = defaultCourse.includes("AFCAT")
+      ? "https://gutsnglorydefence.in/new-courses/10-afcat-%281%29-2027"
+      : "https://gutsnglorydefence.in/new-courses/9-cds-%281%29-2027";
+    window.location.href = redirectUrl;
+
     return (
       <div className="text-center py-10 relative z-10">
-        <div className="w-20 h-20 bg-gold/20 text-gold rounded-full flex items-center justify-center mx-auto mb-6">
+        <div className="w-20 h-20 bg-gold/20 text-gold rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
           <CheckCircle2 className="w-10 h-10" />
         </div>
-        <h3 className="text-2xl font-bold text-foreground mb-2">Thank You!</h3>
+        <h3 className="text-2xl font-bold text-foreground mb-2">
+          Redirecting...
+        </h3>
         <p className="text-muted">
-          Your details have been submitted. Our counsellor will contact you
-          shortly.
+          Taking you to the course page. Please wait.
         </p>
-        <button
-          onClick={() => setSuccess(false)}
-          className="mt-8 text-gold underline"
-        >
-          Submit another
-        </button>
       </div>
     );
   }
@@ -387,6 +455,15 @@ export default function CampaignLandingPage({
 }: CampaignLandingPageProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPopup(true);
+    }, 1500); // Small delay so it's not jarring
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -395,21 +472,24 @@ export default function CampaignLandingPage({
   }, []);
 
   const whatsappMsg = `Hi Guts N Glory Defence, I am interested in the ${examType} 1 2027 course. Please share the syllabus, batch details, fees and enrollment process.`;
-  const whatsappUrl = `https://wa.me/919999999999?text=${encodeURIComponent(whatsappMsg)}`; // Replace with actual number
+  const whatsappUrl = `https://wa.me/918319590298?text=${encodeURIComponent(whatsappMsg)}`; // Replace with actual number
 
   return (
-    <div className="min-h-screen bg-card selection:bg-yellow-500/30 font-sans text-[#F0EDE8]">
+    <div className="min-h-screen bg-card selection:bg-yellow-500/30 font-sans text-foreground">
       {/* HEADER */}
       <header
         className={cn(
           "fixed top-0 inset-x-0 z-50 transition-all duration-300 border-b border-transparent",
-          (isScrolled || mobileMenuOpen)
+          isScrolled || mobileMenuOpen
             ? "bg-[var(--bg-navbar)] backdrop-blur-xl border-gold/20 shadow-sm py-4"
             : "bg-transparent py-6",
         )}
       >
         <div className="container mx-auto px-4 md:px-6 md:px-12 flex items-center justify-between">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
             <Image
               src="/gutsnglorylogo.jpeg"
               alt="Guts N Glory Defence"
@@ -421,14 +501,12 @@ export default function CampaignLandingPage({
               className="rounded-full object-cover shadow-sm"
             />
             <span className="text-xl font-bold tracking-tight text-foreground">
-              Guts N Glory{" "}
-              <span className="text-gold dark:text-yellow-500">
-                Defence
-              </span>
+              GUTS N GLORY{" "}
+              <span className="text-gold dark:text-yellow-500">DEFENCE</span>
             </span>
           </div>
 
-          <nav className="hidden lg:flex items-center gap-8 font-medium text-sm text-slate-700 dark:text-muted">
+          <nav className="hidden lg:flex items-center gap-8 font-bold text-sm text-foreground">
             <a
               href="#courses"
               className="hover:text-gold-hover transition-colors"
@@ -459,9 +537,20 @@ export default function CampaignLandingPage({
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              className={`w-9 h-9 rounded-full border border-transparent cursor-pointer flex items-center justify-center transition-all duration-300 shrink-0 hover:bg-gold hover:text-black hover:shadow-[var(--shadow-glow)] ${
+                isScrolled
+                  ? "bg-edge text-secondary"
+                  : "bg-foreground/10 text-foreground"
+              }`}
+            >
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
             <a
               href="#enroll-form"
-              className="px-6 py-2.5 rounded-full font-semibold text-sm bg-gold hover:bg-gold-hover text-foreground transition-all shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] active:scale-95"
+              className="px-6 py-2.5 rounded-full font-semibold text-sm bg-gold hover:bg-gold-hover text-black transition-all shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] active:scale-95"
             >
               ENROL NOW
             </a>
@@ -471,11 +560,14 @@ export default function CampaignLandingPage({
             className="lg:hidden text-foreground"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
 
-        
         {/* Mobile Menu Slider */}
         <AnimatePresence>
           {mobileMenuOpen && (
@@ -496,7 +588,9 @@ export default function CampaignLandingPage({
               >
                 {/* Header with close */}
                 <div className="flex items-center justify-between px-5 py-4 border-b border-edge">
-                  <span className="text-sm font-bold text-gold uppercase tracking-[2px]">Menu</span>
+                  <span className="text-sm font-bold text-gold uppercase tracking-[2px]">
+                    Menu
+                  </span>
                   <button
                     onClick={() => setMobileMenuOpen(false)}
                     className="w-8 h-8 rounded-full bg-surface flex items-center justify-center text-muted hover:text-gold hover:bg-card-hover transition-all duration-200"
@@ -527,6 +621,17 @@ export default function CampaignLandingPage({
 
                 {/* Spacer */}
                 <div className="flex-1" />
+
+                {/* Theme Toggle */}
+                <div className="px-4 py-2">
+                  <button
+                    onClick={toggleTheme}
+                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-foreground bg-surface hover:bg-card-hover transition-all duration-200"
+                  >
+                    {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+                    {theme === "dark" ? "Light Mode" : "Dark Mode"}
+                  </button>
+                </div>
 
                 {/* CTA */}
                 <div className="p-4 border-t border-edge">
@@ -565,12 +670,9 @@ export default function CampaignLandingPage({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[1.1] mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1] mb-6"
           >
-            Your 2027 Defence Exam <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-400">
-              Preparation Starts Now.
-            </span>
+            Preparing for {examType} 1 2027?
           </motion.h1>
 
           <motion.p
@@ -579,7 +681,7 @@ export default function CampaignLandingPage({
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-base md:text-lg text-muted max-w-3xl mx-auto mb-10 leading-relaxed"
           >
-            Prepare systematically for {examType} 1 2027 with structured courses
+            Start your journey with GUTS N GLORY DEFENCE and Prepare systematically for {examType} 1 2027 with structured courses
             designed around the written examination syllabus, concept building,
             practice, mock tests and exam-focused preparation.
           </motion.p>
@@ -638,7 +740,9 @@ export default function CampaignLandingPage({
               <h3 className="text-foreground font-bold tracking-wider text-sm mb-1 uppercase">
                 Next Batch Starts Soon
               </h3>
-              <p className="text-secondary text-sm md:text-base font-medium">{examType} 1 2027</p>
+              <p className="text-secondary text-sm md:text-base font-medium">
+                {examType} 1 2027
+              </p>
             </div>
           </div>
           <div className="hidden md:block w-px h-12 bg-foreground/20" />
@@ -661,225 +765,25 @@ export default function CampaignLandingPage({
         <div className="container mx-auto px-4 md:px-6">
           <SectionHeading title={`Complete ${examType} 1 2027 Course`} />
 
-          <div className="grid md:grid-cols-1 gap-8 max-w-2xl mx-auto">
-            {examType === "CDS" && (
-              <motion.div
-                whileHover={{ y: -8 }}
-                className="bg-surface rounded-3xl border border-gold/20 p-5 md:p-8 shadow-xl hover:shadow-2xl hover:shadow-yellow-500/10 transition-all flex flex-col"
-              >
-                <div className="mb-6">
-                  <span className="px-4 py-1.5 rounded-full bg-gold/10 text-gold font-bold text-sm mb-4 inline-block">
-                    UPSC EXAM
-                  </span>
-                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">
-                    CDS 1 2027
-                    <br />
-                    Complete Preparation
-                  </h3>
-                  <p className="text-muted">
-                    Prepare for UPSC CDS 1 2027 with structured, exam-focused
-                    preparation.
-                  </p>
-                </div>
+          <div className="grid md:grid-cols-1 gap-8 max-w-3xl mx-auto">
+            <a
+              href="#enroll-form"
+              className="block relative w-full rounded-3xl overflow-hidden shadow-2xl group hover:shadow-yellow-500/20 transition-all border border-gold/20 hover:border-gold/50"
+            >
+              <img
+                src={`/${examType}.PNG`}
+                alt={`${examType} Course Creative`}
+                className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
+            </a>
 
-                <div className="space-y-6 flex-grow">
-                  <div>
-                    <h4 className="font-bold text-foreground border-b border-gold/20 pb-2 mb-3">
-                      What the course covers:
-                    </h4>
-                    <ul className="space-y-4">
-                      <li>
-                        <span className="font-semibold text-gold block mb-1">
-                          English
-                        </span>
-                        <span className="text-sm text-muted">
-                          Grammar, Vocabulary, Reading Comprehension, Sentence
-                          Arrangement, Error Detection, Previous-Year Questions
-                        </span>
-                      </li>
-                      <li>
-                        <span className="font-semibold text-gold block mb-1">
-                          General Knowledge
-                        </span>
-                        <span className="text-sm text-muted">
-                          Current Affairs, History, Geography, Polity, Economy,
-                          General Science, Defence & National Affairs
-                        </span>
-                      </li>
-                      <li>
-                        <span className="font-semibold text-gold block mb-1">
-                          Elementary Mathematics
-                        </span>
-                        <span className="text-sm text-muted">
-                          Arithmetic, Algebra, Geometry, Trigonometry,
-                          Mensuration, Statistics, Previous-Year Questions
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="bg-card/50 p-6 rounded-2xl">
-                    <h4 className="font-bold text-foreground mb-4">
-                      Course Features:
-                    </h4>
-                    <div className="grid grid-cols-2 gap-y-3 gap-x-2 text-sm font-medium text-slate-700 dark:text-muted">
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Live
-                        Classes
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Recorded
-                        Lectures
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Study
-                        Material
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Topic-wise
-                        Practice
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" />{" "}
-                        Previous-Year Qs
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Mock Tests
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Doubt
-                        Support
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Exam
-                        Strategy
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <a
-                  href="#enroll-form"
-                  className="mt-8 w-full block text-center px-6 py-4 rounded-xl font-bold text-foreground bg-surface text-gold border border-gold/30 hover:bg-gold hover:text-inverse transition-colors"
-                >
-                  View CDS 1 2027 Course
-                </a>
-              </motion.div>
-            )}
-
-            {examType === "AFCAT" && (
-              <motion.div
-                whileHover={{ y: -8 }}
-                className="bg-surface rounded-3xl border border-gold/20 p-5 md:p-8 shadow-xl hover:shadow-2xl hover:shadow-yellow-500/10 transition-all flex flex-col"
-              >
-                <div className="mb-6">
-                  <span className="px-4 py-1.5 rounded-full bg-gold/10 text-gold dark:text-yellow-400 font-bold text-sm mb-4 inline-block">
-                    IAF EXAM
-                  </span>
-                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">
-                    {examType} 1 2027
-                    <br />
-                    Complete Preparation
-                  </h3>
-                  <p className="text-muted">
-                    Prepare for {examType} 1 2027 with structured lessons,
-                    practice, mock tests and exam-oriented guidance.
-                  </p>
-                </div>
-
-                <div className="space-y-6 flex-grow">
-                  <div>
-                    <h4 className="font-bold text-foreground border-b border-gold/20 pb-2 mb-3">
-                      Course modules:
-                    </h4>
-                    <ul className="space-y-4">
-                      <li>
-                        <span className="font-semibold text-gold dark:text-yellow-400 block mb-1">
-                          English
-                        </span>
-                        <span className="text-sm text-muted">
-                          Grammar, Vocabulary, Comprehension, Sentence Formation
-                        </span>
-                      </li>
-                      <li>
-                        <span className="font-semibold text-gold dark:text-yellow-400 block mb-1">
-                          General Awareness
-                        </span>
-                        <span className="text-sm text-muted">
-                          Current Affairs, History, Geography, Polity, Defence
-                          Awareness, General Science
-                        </span>
-                      </li>
-                      <li>
-                        <span className="font-semibold text-gold dark:text-yellow-400 block mb-1">
-                          Numerical Ability
-                        </span>
-                        <span className="text-sm text-muted">
-                          Arithmetic, Percentage, Ratio & Proportion, Profit &
-                          Loss, Time & Work, Speed, Time & Distance, Data
-                          Interpretation
-                        </span>
-                      </li>
-                      <li>
-                        <span className="font-semibold text-gold dark:text-yellow-400 block mb-1">
-                          Reasoning & Military Aptitude
-                        </span>
-                        <span className="text-sm text-muted">
-                          Verbal Reasoning, Non-Verbal Reasoning, Logical
-                          Reasoning, Spatial Ability, Military Aptitude
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="bg-card/50 p-6 rounded-2xl mt-auto">
-                    <h4 className="font-bold text-foreground mb-4">
-                      Course Features:
-                    </h4>
-                    <div className="grid grid-cols-2 gap-y-3 gap-x-2 text-sm font-medium text-slate-700 dark:text-muted">
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Live
-                        Classes
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Recorded
-                        Lectures
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Study
-                        Material
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Topic-wise
-                        Practice
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" />{" "}
-                        Previous-Year Qs
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Mock Tests
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Doubt
-                        Support
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-gold" /> Exam
-                        Strategy
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <a
-                  href="#enroll-form"
-                  className="mt-8 w-full block text-center px-6 py-4 rounded-xl font-bold text-foreground bg-surface text-gold border border-gold/30 hover:bg-gold hover:text-inverse transition-colors"
-                >
-                  Enroll in {examType} 1 2027
-                </a>
-              </motion.div>
-            )}
+            <a
+              href="#enroll-form"
+              className="w-full block text-center px-6 py-4 rounded-xl font-bold text-black bg-gold shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] transition-all"
+            >
+              Enroll in {examType} 1 2027 &rarr;
+            </a>
           </div>
         </div>
       </section>
@@ -891,18 +795,15 @@ export default function CampaignLandingPage({
 
         <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl">
           <div className="text-center mb-16">
-            <span className="text-gold font-bold tracking-widest uppercase text-sm mb-4 block">
-              Complete Toolkit
-            </span>
+            <span className="text-gold font-bold tracking-widest uppercase text-sm mb-4 block"></span>
             <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-tighter text-foreground mb-6">
-              Everything You Need for Your <br className="hidden md:block" />{" "}
-              2027 Defence Exam Preparation
+              WHAT WE OFFER
             </h2>
             <div className="w-24 h-1 bg-gold mx-auto rounded-full opacity-50" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {WHAT_YOU_GET.map((item, idx) => (
+            {getWhatYouGet(examType).map((item, idx) => (
               <motion.div
                 key={idx}
                 whileHover={{ y: -5, scale: 1.02 }}
@@ -918,8 +819,7 @@ export default function CampaignLandingPage({
                   {item.title}
                 </h3>
                 <p className="text-muted text-sm leading-relaxed relative z-10">
-                  Comprehensive and expertly curated to accelerate your
-                  preparation journey.
+                  {item.desc}
                 </p>
               </motion.div>
             ))}
@@ -930,10 +830,13 @@ export default function CampaignLandingPage({
       {/* WHY US */}
       <section id="why-us" className="py-12 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
-          <SectionHeading title="Why Choose Guts N Glory Defence?" />
+          <SectionHeading
+            title="WHY CHOOSE GUTS N GLORY"
+            subtitle="If you have Guts, Glory will Follow…"
+          />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {WHY_US_DATA.map((item, idx) => (
+            {getWhyUsData(examType).map((item, idx) => (
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -942,7 +845,7 @@ export default function CampaignLandingPage({
                 key={idx}
                 className="bg-surface/50 border border-gold/20 rounded-2xl md:rounded-3xl p-5 md:p-8 hover:border-yellow-500/50 transition-colors group"
               >
-                <div className="w-12 h-12 rounded-xl bg-surface flex items-center justify-center text-gold mb-6 group-hover:scale-110 group-hover:bg-yellow-500 group-hover:text-foreground transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-surface flex items-center justify-center text-gold mb-6 group-hover:scale-110 group-hover:bg-gold group-hover:text-black transition-all duration-300 [&_svg]:transition-colors [&_svg]:duration-300 group-hover:[&_svg]:text-black">
                   {item.icon}
                 </div>
                 <h3 className="text-base md:text-lg font-bold text-foreground mb-3">
@@ -959,7 +862,7 @@ export default function CampaignLandingPage({
       <section id="faculty" className="py-12 md:py-24 bg-card">
         <div className="container mx-auto px-4 md:px-6">
           <SectionHeading
-            title="Meet Your Defence Exam Mentors"
+            title="MEET YOUR DEFENCE EXAM MENTORS"
             subtitle="EXPERT FACULTY"
           />
 
@@ -973,9 +876,15 @@ export default function CampaignLandingPage({
                 key={idx}
                 className="bg-surface border border-gold/20 rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 group"
               >
-                <div className="h-48 bg-surface relative overflow-hidden flex items-center justify-center">
-                  <Users className="w-20 h-20 text-muted text-muted group-hover:scale-110 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+                <div className="h-64 bg-surface relative overflow-hidden flex items-center justify-center">
+                  <Image
+                    src={faculty.image}
+                    alt={faculty.name}
+                    fill
+                    className="object-cover object-top group-hover:scale-110 transition-transform duration-700"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent" />
                   <div className="absolute bottom-4 left-6 text-foreground">
                     <h3 className="text-lg font-bold">{faculty.name}</h3>
                     <p className="text-gold font-medium text-sm">
@@ -1005,7 +914,7 @@ export default function CampaignLandingPage({
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-tighter mb-4">
-              Our Students. Their Journey.
+              OUR JOURNEY SO FAR
             </h2>
             <p className="text-secondary text-lg max-w-2xl mx-auto">
               A legacy of structured preparation and dedicated guidance.
@@ -1014,48 +923,62 @@ export default function CampaignLandingPage({
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-center">
             <div>
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, type: "spring" }}
-                className="text-2xl md:text-4xl font-extrabold mb-2 text-foreground"><Counter to={2000} duration={2} />+</motion.div>
+                className="text-2xl md:text-4xl font-extrabold mb-2 text-foreground"
+              >
+                <Counter to={5000} duration={2} />+
+              </motion.div>
               <div className="text-secondary text-sm md:text-base font-medium">
                 Candidates Trained
               </div>
             </div>
             <div>
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, type: "spring" }}
-                className="text-2xl md:text-4xl font-extrabold mb-2 text-foreground"><Counter to={150} duration={2} />+</motion.div>
-              <div className="text-secondary text-sm md:text-base font-medium">
-                Mock Tests Conducted
-              </div>
-            </div>
-            <div>
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, type: "spring" }}
-                className="text-2xl md:text-4xl font-extrabold mb-2 text-foreground"><Counter to={8} duration={2} />+</motion.div>
-              <div className="text-secondary text-sm md:text-base font-medium">
-                Years of Teaching Experience
-              </div>
-            </div>
-            <div>
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, type: "spring" }}
-                className="text-xl md:text-4xl font-extrabold mb-2 text-foreground">
-                Dedicated
+                className="text-2xl md:text-4xl font-extrabold mb-2 text-foreground"
+              >
+                <Counter to={500} duration={2} />+
               </motion.div>
-              <div className="text-secondary text-sm md:text-base font-medium">Expert Mentorship</div>
+              <div className="text-secondary text-sm md:text-base font-medium">
+                Selections
+              </div>
+            </div>
+            <div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, type: "spring" }}
+                className="text-2xl md:text-4xl font-extrabold mb-2 text-foreground"
+              >
+                <Counter to={10000} duration={2} />+
+              </motion.div>
+              <div className="text-secondary text-sm md:text-base font-medium">
+                Mocks Conducted
+              </div>
+            </div>
+            <div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, type: "spring" }}
+                className="text-2xl md:text-4xl font-extrabold mb-2 text-foreground"
+              >
+                <Counter to={15} duration={2} />+
+              </motion.div>
+              <div className="text-secondary text-sm md:text-base font-medium">
+                Years of Combined
+                <br />
+                Experience
+              </div>
             </div>
           </div>
         </div>
@@ -1064,7 +987,9 @@ export default function CampaignLandingPage({
       {/* TESTIMONIALS */}
       <section id="testimonials" className="py-12 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
-          <SectionHeading title="Success Stories" />
+          <SectionHeading
+            title={<span className="italic">Success Stories</span>}
+          />
 
           <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {TESTIMONIALS.map((testimonial, idx) => (
@@ -1074,22 +999,22 @@ export default function CampaignLandingPage({
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 key={idx}
-                className="bg-surface border border-gold/20 p-5 md:p-8 rounded-2xl md:rounded-3xl relative"
+                className="bg-surface border border-gold/20 p-5 md:p-8 rounded-2xl md:rounded-3xl relative hover:border-gold/60 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(250,204,21,0.1)] transition-all duration-300"
               >
                 <div className="flex gap-1 text-amber-500 mb-6">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 fill-current" />
                   ))}
                 </div>
-                <p className="text-muted mb-8 italic">
-                  "{testimonial.text}"
-                </p>
+                <p className="text-muted mb-8 italic">"{testimonial.text}"</p>
                 <div className="flex items-center gap-4 mt-auto">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-gold/10 text-gold rounded-full flex items-center justify-center font-bold text-lg">
                     {testimonial.name.charAt(0)}
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm md:text-base text-foreground">{testimonial.name}</h4>
+                    <h4 className="font-bold text-sm md:text-base text-foreground">
+                      {testimonial.name}
+                    </h4>
                     <p className="text-sm text-gold">
                       {testimonial.exam} • {testimonial.batch}
                     </p>
@@ -1138,7 +1063,7 @@ export default function CampaignLandingPage({
             </p>
           </div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -1179,8 +1104,8 @@ export default function CampaignLandingPage({
               priority
               className="rounded-full object-cover opacity-90"
             />
-            <span className="text-lg font-bold tracking-tight text-foreground">
-              Guts N Glory <span className="text-gold">Defence</span>
+            <span className="text-lg font-bold tracking-tight text-white">
+              GUTS N GLORY <span className="text-gold">DEFENCE</span>
             </span>
           </div>
           <p className="mb-4 max-w-md mx-auto">
@@ -1188,7 +1113,7 @@ export default function CampaignLandingPage({
             Defence aspirants across India.
           </p>
           <p>
-            &copy; {new Date().getFullYear()} Guts N Glory Defence. All rights
+            &copy; {new Date().getFullYear()} GUTS N GLORY DEFENCE. All rights
             reserved.
           </p>
         </div>
@@ -1199,11 +1124,50 @@ export default function CampaignLandingPage({
         href={whatsappUrl}
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 rounded-full bg-[#25D366] text-foreground font-bold shadow-2xl hover:scale-105 transition-transform duration-300"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 rounded-full bg-[#25D366] text-white font-bold shadow-2xl hover:scale-105 transition-transform duration-300"
       >
         <MessageCircle className="w-6 h-6 fill-current" />
         <span className="hidden md:inline">Talk to a Course Counsellor</span>
       </a>
+
+      {/* POPUP ENROLLMENT FORM */}
+      <AnimatePresence>
+        {showPopup && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowPopup(false)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-xl bg-card p-6 md:p-8 rounded-3xl border border-gold/20 shadow-2xl overflow-y-auto max-h-[90vh] z-10"
+            >
+              <button
+                onClick={() => setShowPopup(false)}
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-surface text-muted hover:text-gold hover:bg-card-hover transition-all z-20"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="text-center mb-6 pt-2">
+                <h2 className="text-2xl font-bold text-foreground mb-2">
+                  Enroll in {examType} 1 2027 Course
+                </h2>
+                <p className="text-sm text-muted">
+                  Reserve your seat and access the most structured {examType} preparation course.
+                </p>
+              </div>
+
+              <LeadForm defaultCourse={`${examType} 1 2027`} />
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

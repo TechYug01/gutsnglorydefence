@@ -12,7 +12,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -22,8 +22,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       setTheme(stored);
       document.documentElement.setAttribute("data-theme", stored);
     } else {
-      // Default to dark for military aesthetic
-      document.documentElement.setAttribute("data-theme", "dark");
+      // Default to light
+      document.documentElement.setAttribute("data-theme", "light");
     }
   }, []);
 
