@@ -681,7 +681,8 @@ export default function CampaignLandingPage({
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-base md:text-lg text-muted max-w-3xl mx-auto mb-10 leading-relaxed"
           >
-            Start your journey with GUTS N GLORY DEFENCE and Prepare systematically for {examType} 1 2027 with structured courses
+            Start your journey with GUTS N GLORY DEFENCE and Prepare
+            systematically for {examType} 1 2027 with structured courses
             designed around the written examination syllabus, concept building,
             practice, mock tests and exam-focused preparation.
           </motion.p>
@@ -885,7 +886,7 @@ export default function CampaignLandingPage({
                     unoptimized
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent" />
-                  <div className="absolute bottom-4 left-6 text-foreground">
+                  <div className="absolute bottom-4 left-6 text-white">
                     <h3 className="text-lg font-bold">{faculty.name}</h3>
                     <p className="text-gold font-medium text-sm">
                       {faculty.subject}
@@ -1159,7 +1160,8 @@ export default function CampaignLandingPage({
                   Enroll in {examType} 1 2027 Course
                 </h2>
                 <p className="text-sm text-muted">
-                  Reserve your seat and access the most structured {examType} preparation course.
+                  Reserve your seat and access the most structured {examType}{" "}
+                  preparation course.
                 </p>
               </div>
 
