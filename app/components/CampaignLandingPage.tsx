@@ -267,7 +267,7 @@ const SectionHeading = ({
         {subtitle}
       </span>
     )}
-    <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-[4px] text-[#1A1A1A] mb-6">
+    <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-[3px] text-[#1A1A1A] mb-6">
       {title}
     </h2>
     <div className="w-24 h-1.5 bg-gold mx-auto rounded-full" />
@@ -307,7 +307,9 @@ const AccordionItem = ({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className="px-6 pb-6 text-[#7A7A7A] leading-relaxed">{answer}</div>
+            <div className="px-6 pb-6 text-[#7A7A7A] leading-relaxed">
+              {answer}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -756,15 +758,20 @@ export default function CampaignLandingPage({
         <div className="container mx-auto px-4 md:px-6">
           <SectionHeading title={`Complete ${examType} 1 2027 Course`} />
 
-          <div className="grid md:grid-cols-1 gap-8 max-w-3xl mx-auto">
+          <div className="grid md:grid-cols-1 gap-8 max-w-5xl mx-auto">
             <a
               href="#enroll-form"
-              className="block relative w-full rounded-3xl overflow-hidden shadow-2xl group hover:shadow-yellow-500/20 transition-all border border-gold/20 hover:border-gold/50"
+              className="block relative w-[85%] sm:w-[75%] md:w-full mx-auto rounded-3xl overflow-hidden shadow-2xl group hover:shadow-cyan-500/20 transition-all border border-gold/20 hover:border-gold/50"
             >
+              <img
+                src={`/${examType}_PC.PNG`}
+                alt={`${examType} Course Creative`}
+                className="hidden md:block w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-700"
+              />
               <img
                 src={`/${examType}.PNG`}
                 alt={`${examType} Course Creative`}
-                className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                className="block md:hidden w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
             </a>
@@ -787,10 +794,7 @@ export default function CampaignLandingPage({
         <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl">
           <div className="text-center mb-16">
             <span className="text-gold font-bold tracking-widest uppercase text-sm mb-4 block"></span>
-            <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-tighter text-[#1A1A1A] mb-6">
-              WHAT WE OFFER
-            </h2>
-            <div className="w-24 h-1 bg-gold mx-auto rounded-full opacity-50" />
+            <SectionHeading title="WHAT WE OFFER" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -997,7 +1001,9 @@ export default function CampaignLandingPage({
                     <Star key={i} className="w-5 h-5 fill-current" />
                   ))}
                 </div>
-                <p className="text-[#7A7A7A] mb-8 italic">"{testimonial.text}"</p>
+                <p className="text-[#7A7A7A] mb-8 italic">
+                  "{testimonial.text}"
+                </p>
                 <div className="flex items-center gap-4 mt-auto">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-gold/10 text-gold rounded-full flex items-center justify-center font-bold text-lg">
                     {testimonial.name.charAt(0)}
