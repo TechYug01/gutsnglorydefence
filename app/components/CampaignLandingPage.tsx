@@ -267,7 +267,7 @@ const SectionHeading = ({
         {subtitle}
       </span>
     )}
-    <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-[3px] text-[#1A1A1A] mb-6">
+    <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-[4px] text-[#1A1A1A] mb-6">
       {title}
     </h2>
     <div className="w-24 h-1.5 bg-gold mx-auto rounded-full" />
@@ -307,9 +307,7 @@ const AccordionItem = ({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className="px-6 pb-6 text-[#7A7A7A] leading-relaxed">
-              {answer}
-            </div>
+            <div className="px-6 pb-6 text-[#7A7A7A] leading-relaxed">{answer}</div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -778,9 +776,9 @@ export default function CampaignLandingPage({
 
             <a
               href="#enroll-form"
-              className="w-full block text-center px-6 py-4 rounded-xl font-bold text-[#1A1A1A] bg-gold shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] transition-all"
+              className="w-[85%] sm:w-[75%] md:w-full mx-auto block text-center px-6 py-4 rounded-xl font-bold text-[#1A1A1A] bg-gold shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] transition-all"
             >
-              Enroll in {examType} 1 2027 &rarr;
+              Enroll in {examType}{" "}1 2027 &rarr;
             </a>
           </div>
         </div>
@@ -794,7 +792,10 @@ export default function CampaignLandingPage({
         <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl">
           <div className="text-center mb-16">
             <span className="text-gold font-bold tracking-widest uppercase text-sm mb-4 block"></span>
-            <SectionHeading title="WHAT WE OFFER" />
+            <h2 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase tracking-tighter text-[#1A1A1A] mb-6">
+              WHAT WE OFFER
+            </h2>
+            <div className="w-24 h-1 bg-gold mx-auto rounded-full opacity-50" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -1001,9 +1002,7 @@ export default function CampaignLandingPage({
                     <Star key={i} className="w-5 h-5 fill-current" />
                   ))}
                 </div>
-                <p className="text-[#7A7A7A] mb-8 italic">
-                  "{testimonial.text}"
-                </p>
+                <p className="text-[#7A7A7A] mb-8 italic">"{testimonial.text}"</p>
                 <div className="flex items-center gap-4 mt-auto">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-gold/10 text-gold rounded-full flex items-center justify-center font-bold text-lg">
                     {testimonial.name.charAt(0)}
