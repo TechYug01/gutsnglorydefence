@@ -326,30 +326,31 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      mobile: formData.get("mobile"),
-      course: formData.get("course"),
+    const data = new FormData(e.currentTarget);
+    const formData = {
+      name: data.get("name"),
+      email: data.get("email"),
+      mobile: data.get("mobile"),
+      course: data.get("course"),
     };
 
     try {
       const res = await fetch("/api/campaign-leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formData),
       });
 
-      if (!res.ok) throw new Error("Failed to submit");
+      if (!res.ok) throw new Error("Failed to submit lead data");
       setSuccess(true);
     } catch (err: any) {
-      setError(err.message || "An error occurred. Please try again.");
+      console.error(err);
+      setError("Failed to save data. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -377,7 +378,7 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+    <form onSubmit={handleSubmitForm} className="space-y-6 relative z-10">
       {error && (
         <div className="p-4 bg-red-500/10 border border-red-500/50 rounded-xl text-red-400 text-sm">
           {error}
@@ -443,9 +444,11 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
       <button
         disabled={loading}
         type="submit"
-        className="w-full px-8 py-4 mt-4 rounded-xl font-black text-[#1A1A1A] transition-all bg-gold hover:bg-gold-hover shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] disabled:opacity-70 disabled:cursor-not-allowed"
+        className="w-full px-8 py-4 mt-4 rounded-xl font-black text-[#1A1A1A] transition-all bg-gold hover:bg-gold-hover shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] disabled:opacity-50 disabled:cursor-not-allowed group relative overflow-hidden"
       >
-        {loading ? "Submitting..." : "Reserve Your Seat"}
+        <span className="relative z-10">
+          {loading ? "Submitting..." : "Reserve Your Seat"}
+        </span>
       </button>
     </form>
   );
@@ -456,7 +459,6 @@ export default function CampaignLandingPage({
 }: CampaignLandingPageProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     // Force light mode for these landing pages
@@ -465,20 +467,10 @@ export default function CampaignLandingPage({
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowPopup(true);
-    }, 1500); // Small delay so it's not jarring
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const whatsappMsg = `Hi Guts N Glory Defence, I am interested in the ${examType} 1 2027 course. Please share the syllabus, batch details, fees and enrollment process.`;
-  const whatsappUrl = `https://wa.me/918319590298?text=${encodeURIComponent(whatsappMsg)}`; // Replace with actual number
 
   return (
     <div className="min-h-screen bg-white selection:bg-yellow-500/30 font-sans text-[#1A1A1A]">
@@ -491,9 +483,9 @@ export default function CampaignLandingPage({
             : "bg-transparent py-6",
         )}
       >
-        <div className="container mx-auto px-4 md:px-6 md:px-12 flex items-center justify-between">
+        <div className="container mx-auto px-4 md:px-6 md:px-12 relative flex items-center justify-between">
           <div
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer relative z-10"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <Image
@@ -511,7 +503,7 @@ export default function CampaignLandingPage({
             </span>
           </div>
 
-          <nav className="hidden lg:flex items-center gap-8 font-bold text-sm text-[#1A1A1A]">
+          <nav className="hidden lg:flex items-center gap-8 font-bold text-sm text-[#1A1A1A] absolute left-1/2 -translate-x-1/2">
             <a
               href="#courses"
               className="hover:text-gold-hover transition-colors"
@@ -541,18 +533,8 @@ export default function CampaignLandingPage({
             </a>
           </nav>
 
-          <div className="hidden lg:flex items-center gap-4">
-            {/* Theme toggle removed to force light mode */}
-            <a
-              href="#enroll-form"
-              className="px-6 py-2.5 rounded-full font-semibold text-sm bg-gold hover:bg-gold-hover text-[#1A1A1A] transition-all shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] active:scale-95"
-            >
-              ENROL NOW
-            </a>
-          </div>
-
           <button
-            className="lg:hidden text-[#1A1A1A]"
+            className="lg:hidden text-[#1A1A1A] relative z-10"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
@@ -616,19 +598,6 @@ export default function CampaignLandingPage({
 
                 {/* Spacer */}
                 <div className="flex-1" />
-
-                {/* Theme Toggle removed to force light mode */}
-
-                {/* CTA */}
-                <div className="p-4 border-t border-black/10">
-                  <a
-                    href="#enroll-form"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold text-white no-underline bg-gold shadow-[0_0_15px_rgba(250,204,21,0.2)] transition-all duration-200 hover:shadow-[0_0_25px_rgba(250,204,21,0.4)] active:scale-[0.98]"
-                  >
-                    ENROL NOW <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
               </motion.div>
             </>
           )}
@@ -647,78 +616,74 @@ export default function CampaignLandingPage({
         />
         {/* Overlay to fade the background */}
         <div className="absolute inset-0 bg-[#FAF8F5]/80 z-0" />
-        <div className="container mx-auto px-4 md:px-6 relative z-10 text-center max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 border border-gold/30 shadow-sm backdrop-blur-md mb-8 text-sm font-semibold text-[#808000]"
-          >
-            <Shield className="w-4 h-4" />
-            <span>{examType} 1 2027 Preparation Course</span>
-          </motion.div>
+        <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-7xl">
+          <div className="grid lg:grid-cols-2 gap-12 items-center text-center">
+            <div className="flex flex-col items-center justify-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white/70 border border-gold/30 shadow-sm backdrop-blur-md mb-8 text-sm font-semibold text-[#808000]"
+              >
+                <Shield className="w-4 h-4" />
+                <span>{examType} 1 2027 Preparation Course</span>
+              </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl tracking-tight text-[#1A1A1A] leading-[1.1] mb-6"
-            style={{ fontFamily: "var(--font-inter)", fontWeight: 800 }}
-          >
-            Preparing for {examType} 1 2027?
-          </motion.h1>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="text-4xl md:text-5xl lg:text-6xl tracking-tight text-[#1A1A1A] leading-[1.1] mb-6"
+                style={{ fontFamily: "var(--font-inter)", fontWeight: 800 }}
+              >
+                Preparing for {examType} 1 2027?
+              </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base md:text-lg text-[#1A1A1A] max-w-3xl mx-auto mb-10 leading-relaxed "
-            style={{ fontFamily: "var(--font-lato)", fontWeight: 400 }}
-          >
-            Start your journey with GUTS N GLORY DEFENCE and Prepare
-            systematically for {examType} 1 2027 with structured courses
-            designed around the written examination syllabus, concept building,
-            practice, mock tests and exam-focused preparation.
-          </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-base md:text-lg text-[#1A1A1A] max-w-xl mx-auto mb-10 leading-relaxed"
+                style={{ fontFamily: "var(--font-lato)", fontWeight: 400 }}
+              >
+                Start your journey with GUTS N GLORY DEFENCE and Prepare
+                systematically for {examType} 1 2027 with structured courses
+                designed around the written examination syllabus, concept building,
+                practice, mock tests and exam-focused preparation.
+              </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <a
-              href="#courses"
-              className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-[#1A1A1A] bg-gold hover:bg-gold-hover transition-all shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] active:scale-95 flex items-center justify-center gap-2"
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 0.8 }}
+                className="pt-8 border-t border-gold/20 w-full flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-[#808000]"
+              >
+                <span>{examType} 1 2027</span>
+                <span className="hidden sm:block">•</span>
+                <span>Online Classes</span>
+                <span className="hidden sm:block">•</span>
+                <span>Mock Tests</span>
+                <span className="hidden sm:block">•</span>
+                <span>Practice</span>
+                <span className="hidden sm:block">•</span>
+                <span>Exam Strategy</span>
+              </motion.div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="bg-white p-6 md:p-8 rounded-3xl shadow-2xl border border-gold/20 mx-auto w-full max-w-md lg:max-w-none text-left relative"
             >
-              Explore Courses <ArrowRight className="w-5 h-5" />
-            </a>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-[#1A1A1A] bg-white hover:bg-[#F0EDE8] transition-all active:scale-95 flex items-center justify-center gap-2 border border-black/10 shadow-md"
-            >
-              <MessageCircle className="w-5 h-5" /> Talk to a Mentor
-            </a>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.8 }}
-            className="mt-16 pt-8 border-t border-gold/20 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-[#808000]"
-          >
-            <span>{examType} 1 2027</span>
-            <span className="hidden sm:block">•</span>
-            <span>Online Classes</span>
-            <span className="hidden sm:block">•</span>
-            <span>Mock Tests</span>
-            <span className="hidden sm:block">•</span>
-            <span>Practice</span>
-            <span className="hidden sm:block">•</span>
-            <span>Exam Strategy</span>
-          </motion.div>
+              <div className="absolute -top-12 -right-12 w-32 h-32 bg-gold/20 blur-[60px] rounded-full pointer-events-none" />
+              <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2 text-center relative z-10">Enroll Now</h3>
+              <p className="text-sm text-[#7A7A7A] mb-6 text-center relative z-10">Reserve your seat for the {examType} 1 2027 batch.</p>
+              <div className="relative z-10">
+                <LeadForm defaultCourse={`${examType} 1 2027`} />
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -743,12 +708,6 @@ export default function CampaignLandingPage({
             <span className="text-[#1A1A1A] font-semibold text-lg">
               Limited Batch Seats
             </span>
-            <a
-              href="#enroll-form"
-              className="px-6 py-2 bg-gold text-[#1A1A1A] font-black rounded-full hover:bg-gold-hover transition-all shadow-[0_0_15px_rgba(250,204,21,0.3)]"
-            >
-              Reserve Your Seat &rarr;
-            </a>
           </div>
         </div>
       </section>
@@ -759,8 +718,7 @@ export default function CampaignLandingPage({
           <SectionHeading title={`Complete ${examType} 1 2027 Course`} />
 
           <div className="grid md:grid-cols-1 gap-8 max-w-5xl mx-auto">
-            <a
-              href="#enroll-form"
+            <div
               className="block relative w-[85%] sm:w-[75%] md:w-full mx-auto rounded-3xl overflow-hidden shadow-2xl group hover:shadow-cyan-500/20 transition-all border border-gold/20 hover:border-gold/50"
             >
               <img
@@ -774,14 +732,7 @@ export default function CampaignLandingPage({
                 className="block md:hidden w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
-            </a>
-
-            <a
-              href="#enroll-form"
-              className="w-[85%] sm:w-[75%] md:w-full mx-auto block text-center px-6 py-4 rounded-xl font-bold text-[#1A1A1A] bg-gold shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] transition-all"
-            >
-              Enroll in {examType} 1 2027 &rarr;
-            </a>
+            </div>
           </div>
         </div>
       </section>
@@ -1002,9 +953,11 @@ export default function CampaignLandingPage({
                   "{testimonial.text}"
                 </p>
                 <div className="flex items-center gap-4 mt-auto">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gold/10 text-gold rounded-full flex items-center justify-center font-bold text-lg">
-                    {testimonial.name.charAt(0)}
-                  </div>
+                  <img
+                    src={`https://i.pravatar.cc/150?u=${encodeURIComponent(testimonial.name)}`}
+                    alt={testimonial.name}
+                    className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2 border-gold/30 bg-gold/5"
+                  />
                   <div>
                     <h4 className="font-bold text-sm md:text-base text-[#1A1A1A]">
                       {testimonial.name}
@@ -1040,50 +993,6 @@ export default function CampaignLandingPage({
         </div>
       </section>
 
-      {/* ENROLLMENT FORM */}
-      <section
-        id="enroll-form"
-        className="py-12 md:py-24 relative overflow-hidden bg-[#FAF8F5] border-t border-gold/10"
-      >
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gold/10 blur-[100px] rounded-full pointer-events-none" />
-        <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-3xl">
-          <div className="text-center mb-12">
-            <h2 className="text-[clamp(1.5rem,4vw,3rem)] font-bold text-[#1A1A1A] mb-6">
-              Enroll in {examType} 1 2027 Course
-            </h2>
-            <p className="text-base md:text-lg text-[#7A7A7A]">
-              Fill out the form below to reserve your seat and access the most
-              structured {examType} preparation course.
-            </p>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="bg-white p-5 md:p-10 rounded-3xl border border-gold/20 shadow-2xl relative overflow-hidden"
-          >
-            {/* Form Glow */}
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-gold/20 blur-[60px] rounded-full pointer-events-none" />
-
-            <LeadForm defaultCourse={`${examType} 1 2027`} />
-          </motion.div>
-
-          <p className="text-[#7A7A7A] font-medium text-center mt-10">
-            Have Questions?{" "}
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="text-gold hover:text-gold-hover underline underline-offset-4"
-            >
-              WhatsApp Us &rarr;
-            </a>
-          </p>
-        </div>
-      </section>
-
       {/* FOOTER */}
       <footer className="bg-[#1A1A1A] py-8 md:py-12 text-[#7A7A7A] border-t border-gold/10 text-center text-sm">
         <div className="container mx-auto px-4 md:px-6">
@@ -1112,57 +1021,6 @@ export default function CampaignLandingPage({
           </p>
         </div>
       </footer>
-
-      {/* STICKY WHATSAPP BUTTON */}
-      <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 rounded-full bg-[#25D366] text-white font-bold shadow-2xl hover:scale-105 transition-transform duration-300"
-      >
-        <MessageCircle className="w-6 h-6 fill-current" />
-        <span className="hidden md:inline">Talk to a Course Counsellor</span>
-      </a>
-
-      {/* POPUP ENROLLMENT FORM */}
-      <AnimatePresence>
-        {showPopup && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowPopup(false)}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-xl bg-white p-6 md:p-8 rounded-3xl border border-gold/20 shadow-2xl overflow-y-auto max-h-[90vh] z-10"
-            >
-              <button
-                onClick={() => setShowPopup(false)}
-                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#F0EDE8] text-[#7A7A7A] hover:text-gold hover:bg-[#F7F5F2] transition-all z-20"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="text-center mb-6 pt-2">
-                <h2 className="text-2xl font-bold text-[#1A1A1A] mb-2">
-                  Enroll in {examType} 1 2027 Course
-                </h2>
-                <p className="text-sm text-[#7A7A7A]">
-                  Reserve your seat and access the most structured {examType}{" "}
-                  preparation course.
-                </p>
-              </div>
-
-              <LeadForm defaultCourse={`${examType} 1 2027`} />
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
