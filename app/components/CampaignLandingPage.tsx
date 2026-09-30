@@ -503,7 +503,7 @@ export default function CampaignLandingPage({
             </span>
           </div>
 
-          <nav className="hidden lg:flex items-center gap-8 font-bold text-sm text-[#1A1A1A] absolute left-1/2 -translate-x-1/2">
+          <nav className="hidden xl:flex items-center gap-8 font-bold text-sm text-[#1A1A1A] absolute left-1/2 -translate-x-1/2">
             <a
               href="#courses"
               className="hover:text-gold-hover transition-colors"
@@ -534,7 +534,7 @@ export default function CampaignLandingPage({
           </nav>
 
           <button
-            className="lg:hidden text-[#1A1A1A] relative z-10"
+            className="xl:hidden text-[#1A1A1A] relative z-10"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
@@ -554,14 +554,14 @@ export default function CampaignLandingPage({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setMobileMenuOpen(false)}
-                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] lg:hidden"
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] xl:hidden"
               />
               <motion.div
                 initial={{ x: "100%" }}
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="fixed top-0 right-0 h-screen w-[min(300px,80vw)] bg-white z-[70] shadow-2xl flex flex-col border-l border-black/10 lg:hidden overflow-y-auto"
+                className="fixed top-0 right-0 h-screen w-[min(300px,80vw)] bg-white z-[70] shadow-2xl flex flex-col border-l border-black/10 xl:hidden overflow-y-auto"
               >
                 {/* Header with close */}
                 <div className="flex items-center justify-between px-5 py-4 border-b border-black/10">
