@@ -633,10 +633,10 @@ export default function CampaignLandingPage({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-4xl md:text-5xl lg:text-6xl tracking-tight text-[#1A1A1A] leading-[1.1] mb-6"
+                className="text-4xl md:text-5xl lg:text-6xl tracking-tight text-[#1A1A1A] leading-[1.2] mb-6"
                 style={{ fontFamily: "var(--font-inter)", fontWeight: 800 }}
               >
-                Preparing for {examType} 1 2027?
+                Preparing for <br /> {examType} 1 2027?
               </motion.h1>
 
               <motion.p
@@ -656,16 +656,16 @@ export default function CampaignLandingPage({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.8 }}
-                className="pt-8 border-t border-gold/20 w-full flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-[#808000]"
+                className="pt-8 border-t border-gold/20 w-full flex flex-row flex-wrap justify-center items-center gap-x-2 md:gap-x-4 gap-y-2 text-xs md:text-sm font-bold text-black"
               >
                 <span>{examType} 1 2027</span>
-                <span className="hidden sm:block">•</span>
+                <span>•</span>
                 <span>Online Classes</span>
-                <span className="hidden sm:block">•</span>
+                <span>•</span>
                 <span>Mock Tests</span>
-                <span className="hidden sm:block">•</span>
+                <span>•</span>
                 <span>Practice</span>
-                <span className="hidden sm:block">•</span>
+                <span>•</span>
                 <span>Exam Strategy</span>
               </motion.div>
             </div>
