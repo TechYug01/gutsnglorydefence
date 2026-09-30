@@ -112,3 +112,50 @@ export async function getEbooks(): Promise<DriveFile[]> {
     return [];
   }
 }
+
+export async function getMonthlyCurrentAffairs(): Promise<DriveFile[]> {
+  try {
+    const FOLDER_ID = process.env.GDRIVE_MONTHLY_CA_FOLDER_ID;
+    const CLIENT_EMAIL = process.env.GDRIVE_CLIENT_EMAIL;
+    const PRIVATE_KEY = process.env.GDRIVE_PRIVATE_KEY?.replace(/\\n/g, '\n');
+
+    if (!FOLDER_ID || !CLIENT_EMAIL || !PRIVATE_KEY) {
+      console.warn("Google Drive credentials or Monthly CA Folder ID not configured.");
+      return [];
+    }
+
+    const client = new JWT({
+      email: CLIENT_EMAIL,
+      key: PRIVATE_KEY,
+      scopes: ["https://www.googleapis.com/auth/drive.readonly"],
+    });
+
+    const { token } = await client.getAccessToken();
+    if (!token) throw new Error("Failed to retrieve access token");
+
+    const query = `'${FOLDER_ID}' in parents and mimeType='application/pdf' and trashed=false`;
+    const url = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(query)}&fields=files(id,name,webViewLink,createdTime)&orderBy=createdTime%20desc`;
+
+    const response = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
+      next: { revalidate: 3600 }
+    });
+
+    if (!response.ok) throw new Error(`Google API responded with status ${response.status}`);
+
+    const data = await response.json();
+    const files = data.files;
+    
+    if (!files || !Array.isArray(files)) return [];
+
+    return files.map((file) => ({
+      id: file.id || "",
+      name: file.name || "Untitled PDF",
+      webViewLink: file.webViewLink || "",
+      createdTime: file.createdTime || new Date().toISOString(),
+    }));
+  } catch (error) {
+    console.error("Error fetching Monthly CA from Google Drive:", error);
+    return [];
+  }
+}

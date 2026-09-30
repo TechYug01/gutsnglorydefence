@@ -91,7 +91,7 @@ export default function Navbar() {
   // Current Affairs dropdown items
   const caLinks = [
     { label: "Daily Current Affairs", href: "/current-affairs", icon: CalendarIcon },
-    { label: "Monthly CA Magazine", href: "#monthly-ca", icon: BookIcon },
+    { label: "Monthly CA Magazine", href: "/monthly-current-affairs", icon: BookIcon },
   ];
 
   // More dropdown items

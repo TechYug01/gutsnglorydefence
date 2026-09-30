@@ -16,7 +16,8 @@ export default function Footer() {
     { label: "AFCAT Course", href: "#afcat" },
     { label: "SSB Interview", href: "#ssb" },
     { label: "Free Resources", href: "#free-courses" },
-    { label: "Current Affairs", href: "/current-affairs" },
+    { label: "Daily Current Affairs", href: "/current-affairs" },
+    { label: "Monthly CA Magazine", href: "/monthly-current-affairs" },
   ];
 
   const socialLinks = [
