@@ -237,7 +237,7 @@ function Counter({
   const count = useMotionValue(from);
   const rounded = useTransform(count, (latest) => Math.round(latest));
   const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "0px" });
 
   React.useEffect(() => {
     if (isInView) {
