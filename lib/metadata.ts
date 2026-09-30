@@ -14,6 +14,9 @@ export function constructMetadata({
   noindex = false,
 }: SEOProps = {}): Metadata {
   return {
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URL || "https://www.gutsnglorydefence.in",
+    ),
     title,
     description,
     openGraph: {
