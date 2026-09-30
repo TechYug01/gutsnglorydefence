@@ -610,9 +610,9 @@ export default function CampaignLandingPage({
         <Image
           src="/background.jpg"
           alt="Background Image"
-          className="absolute top-0 left-0 w-full h-full object-cover z-0"
-          width={1920}
-          height={1080}
+          fill
+          priority
+          className="object-cover z-0"
         />
         {/* Overlay to fade the background */}
         <div className="absolute inset-0 bg-[#FAF8F5]/80 z-0" />

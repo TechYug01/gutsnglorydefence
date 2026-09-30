@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, Inter, Montserrat, Lato } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { GoogleTagManager } from '@next/third-parties/google';
 import "./globals.css";
 import ConditionalLayout from "@/app/components/ConditionalLayout";
 import { headers } from "next/headers";
@@ -60,6 +61,7 @@ export default async function RootLayout({
             </ConditionalLayout>
           </ClerkProvider>
         )}
+        <GoogleTagManager gtmId="GTM-KTJ384H4" />
       </body>
     </html>
   );
