@@ -656,17 +656,13 @@ export default function CampaignLandingPage({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.8 }}
-                className="pt-8 border-t border-gold/20 w-full flex flex-row flex-wrap justify-center items-center gap-x-2 md:gap-x-4 gap-y-2 text-xs md:text-sm font-bold text-black"
+                className="pt-8 border-t border-gold/20 w-full flex flex-row flex-wrap justify-center items-center gap-2 md:gap-3 text-xs md:text-sm font-bold text-[#1A1A1A]"
               >
-                <span>{examType} 1 2027</span>
-                <span>•</span>
-                <span>Online Classes</span>
-                <span>•</span>
-                <span>Mock Tests</span>
-                <span>•</span>
-                <span>Practice</span>
-                <span>•</span>
-                <span>Exam Strategy</span>
+                <span className="bg-[#FAF8F5] border border-gold/30 shadow-sm px-3 py-1.5 rounded-full">{examType} 1 2027</span>
+                <span className="bg-[#FAF8F5] border border-gold/30 shadow-sm px-3 py-1.5 rounded-full">Online Classes</span>
+                <span className="bg-[#FAF8F5] border border-gold/30 shadow-sm px-3 py-1.5 rounded-full">Mock Tests</span>
+                <span className="bg-[#FAF8F5] border border-gold/30 shadow-sm px-3 py-1.5 rounded-full">Practice</span>
+                <span className="bg-[#FAF8F5] border border-gold/30 shadow-sm px-3 py-1.5 rounded-full">Exam Strategy</span>
               </motion.div>
             </div>
 
