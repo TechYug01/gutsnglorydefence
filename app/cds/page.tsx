@@ -13,7 +13,7 @@ export default function CdsPage() {
       <CampaignLandingPage examType="CDS" />
       {/* Hidden SEO Keywords Block */}
       <div className="sr-only">
-        Keywords: cds online coaching, cds online preparation, cds online course, best online coaching for cds, cds best online coaching, cds course online, cds online coaching free, best cds online coaching, cds online classes, cds online coaching classes, cds online batch.
+        Keywords: cds exam online coaching, cds course online, cds online course, best online coaching for cds, cds best online coaching, cds online classes, cds online coaching fees, best online platform for cds preparation, cds exam preparation online, cds classes online, best online coaching for cds ota, best platform for cds preparation, best online coaching for cds exam, best coaching for cds online
       </div>
     </>
   );

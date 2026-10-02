@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-
 import React, { useState, useEffect } from "react";
 import {
   motion,
@@ -407,6 +406,8 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
             required
             type="email"
             name="email"
+            pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+            title="Please enter a valid email address (e.g., example@domain.com)"
             placeholder="example@example.com"
             className="w-full bg-[#FAF8F5] border border-gold/20 rounded-xl px-4 py-3 text-[#1A1A1A] focus:outline-none focus:border-gold transition-colors"
           />
@@ -417,28 +418,38 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
         <label className="text-sm font-semibold text-[#7A7A7A] ml-1">
           Mobile Number
         </label>
-        <input
-          required
-          type="tel"
-          name="mobile"
-          placeholder="+91-9876543210"
-          className="w-full bg-[#FAF8F5] border border-gold/20 rounded-xl px-4 py-3 text-[#1A1A1A] focus:outline-none focus:border-gold transition-colors"
-        />
+        <div className="flex bg-[#FAF8F5] border border-gold/20 rounded-xl focus-within:border-gold transition-colors overflow-hidden">
+          <div className="flex items-center px-4 border-r border-gold/20 bg-[#F0EDE8] text-[#1A1A1A] font-semibold text-sm">
+            +91
+          </div>
+          <input
+            required
+            type="tel"
+            name="mobile"
+            maxLength={10}
+            minLength={10}
+            pattern="\d{10}"
+            onInput={(e) => {
+              e.currentTarget.value = e.currentTarget.value.replace(/\D/g, "");
+            }}
+            placeholder="9876543210"
+            className="w-full bg-transparent px-4 py-3 text-[#1A1A1A] focus:outline-none"
+          />
+        </div>
       </div>
 
       <div className="space-y-2">
         <label className="text-sm font-semibold text-[#7A7A7A] ml-1">
-          Select Course
+          Course
         </label>
-        <select
+        <input
           required
+          type="text"
           name="course"
-          defaultValue={defaultCourse}
-          className="w-full bg-[#FAF8F5] border border-gold/20 rounded-xl px-4 py-3 text-[#1A1A1A] focus:outline-none focus:border-gold transition-colors appearance-none"
-        >
-          <option value="CDS 1 2027">CDS 1 2027</option>
-          <option value="AFCAT 1 2027">AFCAT 1 2027</option>
-        </select>
+          value={defaultCourse}
+          readOnly
+          className="w-full bg-[#F0EDE8] border border-gold/20 rounded-xl px-4 py-3 text-[#7A7A7A] font-medium cursor-not-allowed focus:outline-none"
+        />
       </div>
 
       <button
