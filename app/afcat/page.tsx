@@ -4,6 +4,7 @@ import CampaignLandingPage from "@/app/components/CampaignLandingPage";
 export const metadata = constructMetadata({
   title: "Best AFCAT Online Coaching 2027 | Guts N Glory Defence",
   description: "Join the best online coaching for AFCAT. Comprehensive AFCAT online preparation, course batches, and live classes to secure your selection.",
+  noindex: true,
 });
 
 export default function AfcatPage() {

@@ -358,8 +358,8 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
 
   if (success) {
     const redirectUrl = defaultCourse.includes("AFCAT")
-      ? "https://gutsnglorydefence.in/new-courses/10-afcat-%281%29-2027"
-      : "https://gutsnglorydefence.in/new-courses/9-cds-%281%29-2027";
+      ? "https://gutsnglorydefence.in/quick-pay/10/10"
+      : "https://gutsnglorydefence.in/quick-pay/10/9";
     window.location.href = redirectUrl;
 
     return (
@@ -385,7 +385,7 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="space-y-6">
         <div className="space-y-2">
           <label className="text-sm font-semibold text-[#7A7A7A] ml-1">
             Full Name
@@ -674,7 +674,7 @@ export default function CampaignLandingPage({
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="bg-white p-6 md:p-8 rounded-3xl shadow-2xl border border-gold/20 mx-auto w-full max-w-md lg:max-w-none text-left relative"
+              className="bg-white p-6 md:p-8 rounded-3xl shadow-2xl border border-gold/20 mx-auto w-full max-w-md text-left relative"
             >
               <div className="absolute -top-12 -right-12 w-32 h-32 bg-gold/20 blur-[60px] rounded-full pointer-events-none" />
               <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2 text-center relative z-10">Enroll Now</h3>
