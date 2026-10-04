@@ -356,10 +356,10 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
   };
 
   if (success) {
-    const redirectUrl = defaultCourse.includes("AFCAT")
+    const paymentUrl = defaultCourse.includes("AFCAT")
       ? "https://gutsnglorydefence.in/quick-pay/10/10"
       : "https://gutsnglorydefence.in/quick-pay/10/9";
-    window.location.href = redirectUrl;
+    window.location.href = `/submit?url=${encodeURIComponent(paymentUrl)}`;
 
     return (
       <div className="text-center py-10 relative z-10">
@@ -458,7 +458,7 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
         className="w-full px-8 py-4 mt-4 rounded-xl font-black text-[#1A1A1A] transition-all bg-gold hover:bg-gold-hover shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] disabled:opacity-50 disabled:cursor-not-allowed group relative overflow-hidden"
       >
         <span className="relative z-10">
-          {loading ? "Submitting..." : "Reserve Your Seat"}
+          {loading ? "Submitting..." : "Submit"}
         </span>
       </button>
     </form>
