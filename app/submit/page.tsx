@@ -9,16 +9,26 @@ function SubmitContent() {
   const redirectUrl = searchParams.get("url");
   const [countdown, setCountdown] = useState(5);
 
+  const [isValid] = useState(() => {
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem("formSubmitted") === "true";
+    }
+    return true;
+  });
+
   useEffect(() => {
-    if (!redirectUrl) return;
+    if (!isValid || !redirectUrl) {
+      window.location.replace("/");
+      return;
+    }
 
     if (countdown > 0) {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
     } else {
-      window.location.href = redirectUrl;
+      window.location.replace(redirectUrl);
     }
-  }, [countdown, redirectUrl]);
+  }, [countdown, redirectUrl, isValid]);
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] flex flex-col items-center justify-center p-6 text-center">

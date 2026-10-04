@@ -359,6 +359,7 @@ function LeadForm({ defaultCourse }: { defaultCourse: string }) {
     const paymentUrl = defaultCourse.includes("AFCAT")
       ? "https://gutsnglorydefence.in/quick-pay/10/10"
       : "https://gutsnglorydefence.in/quick-pay/10/9";
+    sessionStorage.setItem("formSubmitted", "true");
     window.location.href = `/submit?url=${encodeURIComponent(paymentUrl)}`;
 
     return (
