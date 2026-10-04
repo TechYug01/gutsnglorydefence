@@ -52,6 +52,10 @@ function SubmitContent() {
 
           <a 
             href={redirectUrl}
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.replace(redirectUrl);
+            }}
             className="flex items-center gap-2 text-gold font-bold hover:text-gold-hover transition-colors group"
           >
             Click here if you are not redirected automatically
